@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours Complet de JavaScript</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #000;
+            color: #f0f8ff;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #87CEEB;
+        }
+        
+        h1 {
+            color: #87CEEB;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(135, 206, 235, 0.3);
+        }
+        
+        .subtitle {
+            color: #B0E0E6;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .course-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .info-item {
+            background-color: #1a1a1a;
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: #87CEEB;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .course-content {
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 20px rgba(135, 206, 235, 0.1);
+        }
+        
+        h2 {
+            color: #87CEEB;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #2a2a2a;
+            font-size: 1.8rem;
+        }
+        
+        h3 {
+            color: #87CEEB;
+            margin: 25px 0 15px;
+            font-size: 1.4rem;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            color: #e0e0e0;
+        }
+        
+        .section {
+            margin-bottom: 35px;
+            padding: 20px;
+            background-color: #222;
+            border-radius: 8px;
+            border-left: 4px solid #87CEEB;
+        }
+        
+        .code-example {
+            background-color: #2a2a2a;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            color: #87CEEB;
+            overflow-x: auto;
+            border: 1px solid #3a3a3a;
+            line-height: 1.8;
+        }
+        
+        .code-comment {
+            color: #5f9ea0;
+        }
+        
+        ul, ol {
+            padding-left: 25px;
+            margin: 15px 0;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            color: #e0e0e0;
+        }
+        
+        .important {
+            background-color: rgba(30, 144, 255, 0.1);
+            border-left: 4px solid #1E90FF;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .example-box {
+            background-color: #2a2a2a;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border: 1px solid #3a3a3a;
+        }
+        
+        .example-result {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 15px;
+            min-height: 100px;
+        }
+        
+        .start-btn {
+            display: block;
+            width: 250px;
+            margin: 40px auto;
+            padding: 15px;
+            background: linear-gradient(to right, #1E90FF, #00BFFF);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 0 15px rgba(30, 144, 255, 0.5);
+        }
+        
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(30, 144, 255, 0.7);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #87CEEB;
+            border-top: 1px solid #2a2a2a;
+            margin-top: 30px;
+            font-size: 0.9rem;
+        }
+        
+        button.demo-btn {
+            background-color: #1E90FF;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: background-color 0.3s;
+        }
+        
+        button.demo-btn:hover {
+            background-color: #00BFFF;
+        }
+        
+        #resultContainer {
+            padding: 15px;
+            background-color: #333;
+            border-radius: 5px;
+            margin-top: 15px;
+            min-height: 50px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .course-content {
+                padding: 20px;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+            
+            .code-example {
+                padding: 15px;
+                font-size: 0.9rem;
+            }
+            
+            .start-btn {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Cours Complet de JavaScript</h1>
+            <p class="subtitle">Apprenez à rendre vos pages web interactives et dynamiques</p>
+            <div class="course-info">
+                <div class="info-item">Niveau : Débutant</div>
+                <div class="info-item">18 Leçons</div>
+                <div class="info-item">Durée : 6 heures</div>
+                <div class="info-item">Certificat inclus</div>
+            </div>
+        </header>
+        
+        <div class="course-content">
+            <h2>Introduction à JavaScript</h2>
+            
+            <div class="section">
+                <h3>Qu'est-ce que JavaScript ?</h3>
+                <p>JavaScript est un langage de programmation qui permet de rendre les pages web interactives. Contrairement au HTML (structure) et au CSS (style), JavaScript ajoute des fonctionnalités dynamiques.</p>
+                
+                <div class="important">
+                    <p>JavaScript est le seul langage de programmation qui fonctionne nativement dans tous les navigateurs web modernes.</p>
+                </div>
+                
+                <h3>Intégration de JavaScript</h3>
+                <p>Il existe plusieurs façons d'intégrer JavaScript dans une page HTML :</p>
+                
+                <div class="code-example">
+                    <span class="code-comment">&lt;!-- Méthode 1 : Dans le head --&gt;</span><br>
+                    &lt;script src="script.js"&gt;&lt;/script&gt;<br><br>
+                    
+                    <span class="code-comment">&lt;!-- Méthode 2 : À la fin du body --&gt;</span><br>
+                    &lt;script&gt;<br>
+                    &nbsp;&nbsp;<span class="code-comment">// Votre code JavaScript ici</span><br>
+                    &nbsp;&nbsp;console.log("Bonjour JavaScript !");<br>
+                    &lt;/script&gt;
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Variables et types de données</h3>
+                <p>JavaScript utilise trois mots-clés pour déclarer des variables :</p>
+                
+                <div class="code-example">
+                    <span class="code-comment">// Déclaration de variables</span><br>
+                    let age = 25; <span class="code-comment">// Modifiable</span><br>
+                    const PI = 3.14; <span class="code-comment">// Constante</span><br>
+                    var ancienneVariable = "déconseillée"; <span class="code-comment">// Ancienne méthode</span><br><br>
+                    
+                    <span class="code-comment">// Types de données</span><br>
+                    let nom = "Alice"; <span class="code-comment">// String (chaîne de caractères)</span><br>
+                    let estEtudiant = true; <span class="code-comment">// Boolean (booléen)</span><br>
+                    let notes = [15, 18, 12]; <span class="code-comment">// Array (tableau)</span><br>
+                    let personne = { <span class="code-comment">// Object (objet)</span><br>
+                    &nbsp;&nbsp;nom: "Bob",<br>
+                    &nbsp;&nbsp;age: 30<br>
+                    };
+                </div>
+            </div>
+            
+            <h2>Fonctions et structures de contrôle</h2>
+            
+            <div class="section">
+                <h3>Déclaration de fonctions</h3>
+                <p>Les fonctions permettent de regrouper du code réutilisable :</p>
+                
+                <div class="code-example">
+                    <span class="code-comment">// Déclaration de fonction</span><br>
+                    function saluer(nom) {<br>
+                    &nbsp;&nbsp;return "Bonjour " + nom + " !";<br>
+                    }<br><br>
+                    
+                    <span class="code-comment">// Fonction fléchée (ES6)</span><br>
+                    const additionner = (a, b) => {<br>
+                    &nbsp;&nbsp;return a + b;<br>
+                    };<br><br>
+                    
+                    <span class="code-comment">// Appel de fonction</span><br>
+                    console.log(saluer("Alice")); <span class="code-comment">// "Bonjour Alice !"</span><br>
+                    console.log(additionner(5, 3)); <span class="code-comment">// 8</span>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Conditions (if...else)</h3>
+                <div class="code-example">
+                    let temperature = 25;<br><br>
+                    
+                    if (temperature > 30) {<br>
+                    &nbsp;&nbsp;console.log("Il fait très chaud !");<br>
+                    } else if (temperature > 20) {<br>
+                    &nbsp;&nbsp;console.log("Il fait bon.");<br>
+                    } else {<br>
+                    &nbsp;&nbsp;console.log("Il fait frais.");<br>
+                    }
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Boucles (for, while)</h3>
+                <div class="code-example">
+                    <span class="code-comment">// Boucle for</span><br>
+                    for (let i = 0; i < 5; i++) {<br>
+                    &nbsp;&nbsp;console.log("Itération " + i);<br>
+                    }<br><br>
+                    
+                    <span class="code-comment">// Boucle while</span><br>
+                    let compteur = 0;<br>
+                    while (compteur < 3) {<br>
+                    &nbsp;&nbsp;console.log("Compteur: " + compteur);<br>
+                    &nbsp;&nbsp;compteur++;<br>
+                    }<br><br>
+                    
+                    <span class="code-comment">// Boucle for...of (pour les tableaux)</span><br>
+                    const fruits = ["pomme", "banane", "orange"];<br>
+                    for (const fruit of fruits) {<br>
+                    &nbsp;&nbsp;console.log(fruit);<br>
+                    }
+                </div>
+            </div>
+            
+            <h2>Manipulation du DOM</h2>
+            
+            <div class="section">
+                <h3>Qu'est-ce que le DOM ?</h3>
+                <p>Le DOM (Document Object Model) est une représentation en mémoire de la page web. JavaScript peut modifier le DOM pour changer le contenu, la structure et le style d'une page.</p>
+                
+                <h3>Sélection d'éléments</h3>
+                <div class="code-example">
+                    <span class="code-comment">// Sélection par ID</span><br>
+                    const titre = document.getElementById("monTitre");<br><br>
+                    
+                    <span class="code-comment">// Sélection par classe</span><br>
+                    const elements = document.getElementsByClassName("maClasse");<br><br>
+                    
+                    <span class="code-comment">// Sélection par sélecteur CSS</span><br>
+                    const premierPara = document.querySelector("p");<br>
+                    const tousLesPara = document.querySelectorAll("p");
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Modification du contenu</h3>
+                <div class="example-box">
+                    <button class="demo-btn" onclick="changerTexte()">Changer le texte</button>
+                    <button class="demo-btn" onclick="ajouterElement()">Ajouter un élément</button>
+                    <div id="demoContainer" style="margin-top:15px">
+                        <p id="demoText">Ceci est un texte de démonstration.</p>
+                    </div>
+                </div>
+                
+                <div class="code-example">
+                    <span class="code-comment">// Changer le contenu textuel</span><br>
+                    function changerTexte() {<br>
+                    &nbsp;&nbsp;document.getElementById("demoText").textContent = "Texte changé avec JavaScript !";<br>
+                    }<br><br>
+                    
+                    <span class="code-comment">// Ajouter un nouvel élément</span><br>
+                    function ajouterElement() {<br>
+                    &nbsp;&nbsp;const nouvelElement = document.createElement("p");<br>
+                    &nbsp;&nbsp;nouvelElement.textContent = "Nouvel élément ajouté !";<br>
+                    &nbsp;&nbsp;document.getElementById("demoContainer").appendChild(nouvelElement);<br>
+                    }
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Gestion des événements</h3>
+                <div class="example-box">
+                    <button class="demo-btn" id="eventBtn">Cliquez-moi</button>
+                    <p id="eventResult" style="margin-top:10px"></p>
+                </div>
+                
+                <div class="code-example">
+                    <span class="code-comment">// Méthode 1 : Dans le HTML</span><br>
+                    &lt;button onclick="maFonction()"&gt;Cliquez-moi&lt;/button&gt;<br><br>
+                    
+                    <span class="code-comment">// Méthode 2 : Dans JavaScript</span><br>
+                    const bouton = document.getElementById("eventBtn");<br>
+                    bouton.addEventListener("click", function() {<br>
+                    &nbsp;&nbsp;document.getElementById("eventResult").textContent = "Bouton cliqué !";<br>
+                    });
+                </div>
+            </div>
+            
+            <h2>Concepts avancés</h2>
+            
+            <div class="section">
+                <h3>Manipulation de tableaux</h3>
+                <div class="code-example">
+                    const nombres = [1, 2, 3, 4, 5];<br><br>
+                    
+                    <span class="code-comment">// Méthodes courantes</span><br>
+                    const doubles = nombres.map(n => n * 2); <span class="code-comment">// [2, 4, 6, 8, 10]</span><br>
+                    const pairs = nombres.filter(n => n % 2 === 0); <span class="code-comment">// [2, 4]</span><br>
+                    const somme = nombres.reduce((acc, n) => acc + n, 0); <span class="code-comment">// 15</span><br>
+                    nombres.forEach(n => console.log(n)); <span class="code-comment">// Affiche chaque nombre</span>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Promesses et async/await</h3>
+                <p>Les promesses permettent de gérer les opérations asynchrones :</p>
+                
+                <div class="code-example">
+                    <span class="code-comment">// Création d'une promesse</span><br>
+                    const maPromesse = new Promise((resolve, reject) => {<br>
+                    &nbsp;&nbsp;setTimeout(() => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const succes = true;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;if (succes) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resolve("Opération réussie !");<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;} else {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reject("Échec de l'opération");<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;}, 2000);<br>
+                    });<br><br>
+                    
+                    <span class="code-comment">// Utilisation avec .then() et .catch()</span><br>
+                    maPromesse<br>
+                    &nbsp;&nbsp;.then(resultat => console.log(resultat))<br>
+                    &nbsp;&nbsp;.catch(erreur => console.error(erreur));<br><br>
+                    
+                    <span class="code-comment">// Utilisation avec async/await</span><br>
+                    async function executerPromesse() {<br>
+                    &nbsp;&nbsp;try {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const resultat = await maPromesse;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.log(resultat);<br>
+                    &nbsp;&nbsp;} catch (erreur) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.error(erreur);<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Manipulation des dates</h3>
+                <div class="example-box">
+                    <button class="demo-btn" onclick="afficherDate()">Afficher la date</button>
+                    <div id="dateResult" style="margin-top:10px"></div>
+                </div>
+                
+                <div class="code-example">
+                    <span class="code-comment">// Créer une date</span><br>
+                    const maintenant = new Date();<br><br>
+                    
+                    <span class="code-comment">// Obtenir des composants de date</span><br>
+                    const jour = maintenant.getDate();<br>
+                    const mois = maintenant.getMonth() + 1; <span class="code-comment">// Les mois commencent à 0</span><br>
+                    const annee = maintenant.getFullYear();<br><br>
+                    
+                    <span class="code-comment">// Formater une date</span><br>
+                    function afficherDate() {<br>
+                    &nbsp;&nbsp;const dateStr = `${jour}/${mois}/${annee}`;<br>
+                    &nbsp;&nbsp;document.getElementById("dateResult").textContent = dateStr;<br>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Démo 1: Changer le texte
+        function changerTexte() {
+            document.getElementById("demoText").textContent = "Texte changé avec JavaScript !";
+        }
+        
+        // Démo 2: Ajouter un élément
+        function ajouterElement() {
+            const nouvelElement = document.createElement("p");
+            nouvelElement.textContent = "Nouvel élément ajouté !";
+            document.getElementById("demoContainer").appendChild(nouvelElement);
+        }
+        
+        // Démo 3: Gestion d'événements
+        document.getElementById("eventBtn").addEventListener("click", function() {
+            document.getElementById("eventResult").textContent = "Bouton cliqué !";
+        });
+        
+        // Démo 4: Afficher la date
+        function afficherDate() {
+            const maintenant = new Date();
+            const jour = maintenant.getDate();
+            const mois = maintenant.getMonth() + 1;
+            const annee = maintenant.getFullYear();
+            const dateStr = `Date du jour : ${jour}/${mois}/${annee}`;
+            document.getElementById("dateResult").textContent = dateStr;
+        }
+    </script>
+</body>
+</html>

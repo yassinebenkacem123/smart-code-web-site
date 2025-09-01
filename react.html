@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours Complet de React</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #000;
+            color: #f0f8ff;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #87CEEB;
+        }
+        
+        h1 {
+            color: #87CEEB;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(135, 206, 235, 0.3);
+        }
+        
+        .subtitle {
+            color: #B0E0E6;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .course-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .info-item {
+            background-color: #1a1a1a;
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: #87CEEB;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .course-content {
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 20px rgba(135, 206, 235, 0.1);
+        }
+        
+        h2 {
+            color: #87CEEB;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #2a2a2a;
+            font-size: 1.8rem;
+        }
+        
+        h3 {
+            color: #87CEEB;
+            margin: 25px 0 15px;
+            font-size: 1.4rem;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            color: #e0e0e0;
+        }
+        
+        .section {
+            margin-bottom: 35px;
+            padding: 20px;
+            background-color: #222;
+            border-radius: 8px;
+            border-left: 4px solid #87CEEB;
+        }
+        
+        .code-example {
+            background-color: #2a2a2a;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            color: #87CEEB;
+            overflow-x: auto;
+            border: 1px solid #3a3a3a;
+            line-height: 1.8;
+        }
+        
+        .code-comment {
+            color: #5f9ea0;
+        }
+        
+        ul, ol {
+            padding-left: 25px;
+            margin: 15px 0;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            color: #e0e0e0;
+        }
+        
+        .important {
+            background-color: rgba(30, 144, 255, 0.1);
+            border-left: 4px solid #1E90FF;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .example-box {
+            background-color: #2a2a2a;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border: 1px solid #3a3a3a;
+        }
+        
+        .example-result {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 15px;
+            min-height: 100px;
+        }
+        
+        .start-btn {
+            display: block;
+            width: 250px;
+            margin: 40px auto;
+            padding: 15px;
+            background: linear-gradient(to right, #1E90FF, #00BFFF);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 0 15px rgba(30, 144, 255, 0.5);
+        }
+        
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(30, 144, 255, 0.7);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #87CEEB;
+            border-top: 1px solid #2a2a2a;
+            margin-top: 30px;
+            font-size: 0.9rem;
+        }
+        
+        button.demo-btn {
+            background-color: #1E90FF;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: background-color 0.3s;
+        }
+        
+        button.demo-btn:hover {
+            background-color: #00BFFF;
+        }
+        
+        .counter-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .counter-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #87CEEB;
+            min-width: 30px;
+            text-align: center;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .course-content {
+                padding: 20px;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+            
+            .code-example {
+                padding: 15px;
+                font-size: 0.9rem;
+            }
+            
+            .start-btn {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Cours Complet de React</h1>
+            <p class="subtitle">Apprenez à créer des interfaces utilisateur modernes</p>
+        </header>
+        
+        <div class="course-content">
+            <h2>Introduction à React</h2>
+            
+            <div class="section">
+                <h3>Qu'est-ce que React ?</h3>
+                <p>React est une bibliothèque JavaScript open-source développée par Facebook pour créer des interfaces utilisateur. Elle permet de construire des applications web complexes à partir de composants réutilisables.</p>
+                
+                <div class="important">
+                    <p>React utilise un DOM virtuel pour optimiser les performances en minimisant les manipulations directes du DOM réel.</p>
+                </div>
+                
+                <h3>Créer une application React</h3>
+                <div class="code-example">
+                    <span class="code-comment"># Créer une nouvelle application avec Create React App</span><br>
+                    npx create-react-app mon-app<br>
+                    cd mon-app<br>
+                    npm start
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Composants et JSX</h3>
+                <p>React utilise des composants comme blocs de construction. Le JSX permet d'écrire du HTML dans JavaScript.</p>
+                
+                <div class="code-example">
+                    <span class="code-comment">// Composant fonctionnel</span><br>
+                    function Bienvenue() {<br>
+                    &nbsp;&nbsp;return &lt;h1&gt;Bonjour, monde !&lt;/h1&gt;;<br>
+                    }<br><br>
+                    
+                    <span class="code-comment">// Composant de classe</span><br>
+                    class Bienvenue extends React.Component {<br>
+                    &nbsp;&nbsp;render() {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return &lt;h1&gt;Bonjour, monde !&lt;/h1&gt;;<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+            </div>
+            
+            <h2>Concepts fondamentaux</h2>
+            
+            <div class="section">
+                <h3>Props et State</h3>
+                <p>Les props (propriétés) permettent de passer des données aux composants. Le state (état) permet de gérer les données internes d'un composant.</p>
+                
+                <div class="code-example">
+                    <span class="code-comment">// Utilisation des props</span><br>
+                    function Salutation(props) {<br>
+                    &nbsp;&nbsp;return &lt;h1&gt;Bonjour, {props.nom}&lt;/h1&gt;;<br>
+                    }<br>
+                    <span class="code-comment">// Utilisation: &lt;Salutation nom="Alice" /&gt;</span><br><br>
+                    
+                    <span class="code-comment">// Utilisation du state avec useState</span><br>
+                    import { useState } from 'react';<br><br>
+                    
+                    function Compteur() {<br>
+                    &nbsp;&nbsp;const [count, setCount] = useState(0);<br><br>
+                    
+                    &nbsp;&nbsp;return (<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Vous avez cliqué {count} fois&lt;/p&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;button onClick={() => setCount(count + 1)}&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cliquez ici<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/button&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
+                    &nbsp;&nbsp;);<br>
+                    }
+                </div>
+                
+                <div class="example-box">
+                    <div id="counter-demo"></div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Cycle de vie et useEffect</h3>
+                <p>Le hook useEffect permet de gérer les effets de bord dans les composants fonctionnels.</p>
+                
+                <div class="code-example">
+                    import { useState, useEffect } from 'react';<br><br>
+                    
+                    function Exemple() {<br>
+                    &nbsp;&nbsp;const [data, setData] = useState([]);<br><br>
+                    
+                    &nbsp;&nbsp;useEffect(() => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Code exécuté après chaque rendu</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;fetch('https://api.exemple.com/data')<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.then(response => response.json())<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.then(data => setData(data));<br><br>
+                    
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Fonction de nettoyage (optionnelle)</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return () => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log('Nettoyage effectué');<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;};<br>
+                    &nbsp;&nbsp;}, []); <span class="code-comment">// Tableau de dépendances vide = exécuté une fois</span><br><br>
+                    
+                    &nbsp;&nbsp;return (<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;ul&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{data.map(item => (<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li key={item.id}&gt;{item.name}&lt;/li&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;))}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;<br>
+                    &nbsp;&nbsp;);<br>
+                    }
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Gestion des événements</h3>
+                <p>La gestion des événements dans React est similaire au DOM, mais avec une syntaxe camelCase.</p>
+                
+                <div class="code-example">
+                    function BoutonAlerte() {<br>
+                    &nbsp;&nbsp;function handleClick() {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;alert('Vous avez cliqué !');<br>
+                    &nbsp;&nbsp;}<br><br>
+                    
+                    &nbsp;&nbsp;return (<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;button onClick={handleClick}&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cliquez-moi<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/button&gt;<br>
+                    &nbsp;&nbsp;);<br>
+                    }
+                </div>
+            </div>
+            
+            <h2>Concepts avancés</h2>
+            
+            <div class="section">
+                <h3>Routage avec React Router</h3>
+                <p>React Router permet de gérer la navigation dans une application React.</p>
+                
+                <div class="code-example">
+                    <span class="code-comment">// Installation</span><br>
+                    npm install react-router-dom<br><br>
+                    
+                    <span class="code-comment">// Utilisation de base</span><br>
+                    import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';<br><br>
+                    
+                    function App() {<br>
+                    &nbsp;&nbsp;return (<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;BrowserRouter&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;nav&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Link to="/"&gt;Accueil&lt;/Link&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Link to="/apropos"&gt;À propos&lt;/Link&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/nav&gt;<br><br>
+                    
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Routes&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Route path="/" element={&lt;Accueil /&gt;} /&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Route path="/apropos" element={&lt;APropos /&gt;} /&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/Routes&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/BrowserRouter&gt;<br>
+                    &nbsp;&nbsp;);<br>
+                    }
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Gestion d'état avec Context API</h3>
+                <p>Context API permet de partager des données entre composants sans passer par les props.</p>
+                
+                <div class="code-example">
+                    <span class="code-comment">// Création du contexte</span><br>
+                    import { createContext, useContext, useState } from 'react';<br><br>
+                    
+                    const ThemeContext = createContext();<br><br>
+                    
+                    function App() {<br>
+                    &nbsp;&nbsp;const [theme, setTheme] = useState('light');<br><br>
+                    
+                    &nbsp;&nbsp;return (<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;ThemeContext.Provider value={{ theme, setTheme }}&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Toolbar /&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/ThemeContext.Provider&gt;<br>
+                    &nbsp;&nbsp;);<br>
+                    }<br><br>
+                    
+                    function Toolbar() {<br>
+                    &nbsp;&nbsp;return &lt;ThemeButton /&gt;;<br>
+                    }<br><br>
+                    
+                    function ThemeButton() {<br>
+                    &nbsp;&nbsp;const { theme, setTheme } = useContext(ThemeContext);<br><br>
+                    
+                    &nbsp;&nbsp;return (<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Changer le thème ({theme})<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/button&gt;<br>
+                    &nbsp;&nbsp;);<br>
+                    }
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Hooks personnalisés</h3>
+                <p>Les hooks personnalisés permettent d'extraire la logique des composants pour la réutiliser.</p>
+                
+                <div class="code-example">
+                    <span class="code-comment">// Hook personnalisé useWindowSize</span><br>
+                    import { useState, useEffect } from 'react';<br><br>
+                    
+                    function useWindowSize() {<br>
+                    &nbsp;&nbsp;const [size, setSize] = useState({<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;width: window.innerWidth,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;height: window.innerHeight<br>
+                    &nbsp;&nbsp;});<br><br>
+                    
+                    &nbsp;&nbsp;useEffect(() => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;function handleResize() {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setSize({<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width: window.innerWidth,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height: window.innerHeight<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+                    
+                    &nbsp;&nbsp;&nbsp;&nbsp;window.addEventListener('resize', handleResize);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return () => window.removeEventListener('resize', handleResize);<br>
+                    &nbsp;&nbsp;}, []);<br><br>
+                    
+                    &nbsp;&nbsp;return size;<br>
+                    }<br><br>
+                    
+                    <span class="code-comment">// Utilisation dans un composant</span><br>
+                    function DisplayWindowSize() {<br>
+                    &nbsp;&nbsp;const size = useWindowSize();<br><br>
+                    
+                    &nbsp;&nbsp;return (<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Largeur: {size.width}px, Hauteur: {size.height}px<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/p&gt;<br>
+                    &nbsp;&nbsp;);<br>
+                    }
+                </div>
+            </div>
+            
+            <h2>Bonnes pratiques</h2>
+            
+            <div class="section">
+                <h3>Règles des Hooks</h3>
+                <ul>
+                    <li>N'appelez pas les hooks dans des boucles, des conditions ou des fonctions imbriquées</li>
+                    <li>Appelez les hooks uniquement dans des composants React ou des hooks personnalisés</li>
+                    <li>Les hooks doivent toujours être appelés dans le même ordre</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h3>Optimisation des performances</h3>
+                <ul>
+                    <li>Utilisez React.memo pour mémoïser les composants</li>
+                    <li>Utilisez useMemo pour mémoïser des valeurs coûteuses</li>
+                    <li>Utilisez useCallback pour mémoïser des fonctions</li>
+                    <li>Divisez les gros composants en composants plus petits</li>
+                    <li>Utilisez le chargement paresseux avec React.lazy</li>
+                </ul>
+                
+                <div class="code-example">
+                    <span class="code-comment">// Mémoïsation avec React.memo</span><br>
+                    const MonComposantMemoise = React.memo(function MonComposant({ data }) {<br>
+                    &nbsp;&nbsp;<span class="code-comment">/* rendu utilisant data */</span><br>
+                    });<br><br>
+                    
+                    <span class="code-comment">// Mémoïsation de valeurs avec useMemo</span><br>
+                    const valeurMemoisee = useMemo(() => calculComplexe(a, b), [a, b]);<br><br>
+                    
+                    <span class="code-comment">// Mémoïsation de fonctions avec useCallback</span><br>
+                    const fonctionMemoisee = useCallback(() => {<br>
+                    &nbsp;&nbsp;faireQuelqueChose(a, b);<br>
+                    }, [a, b]);<br><br>
+                    
+                    <span class="code-comment">// Chargement paresseux avec React.lazy</span><br>
+                    const AutreComposant = React.lazy(() => import('./AutreComposant'));
+                </div>
+            </div>
+            
+        </div>
+       
+    </div>
+
+    
+</body>
+</html>

@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours Complet d'Express.js</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #000;
+            color: #f0f8ff;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #87CEEB;
+        }
+        
+        h1 {
+            color: #87CEEB;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(135, 206, 235, 0.3);
+        }
+        
+        .subtitle {
+            color: #B0E0E6;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .course-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .info-item {
+            background-color: #1a1a1a;
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: #87CEEB;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .course-content {
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 20px rgba(135, 206, 235, 0.1);
+        }
+        
+        h2 {
+            color: #87CEEB;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #2a2a2a;
+            font-size: 1.8rem;
+        }
+        
+        h3 {
+            color: #87CEEB;
+            margin: 25px 0 15px;
+            font-size: 1.4rem;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            color: #e0e0e0;
+        }
+        
+        .section {
+            margin-bottom: 35px;
+            padding: 20px;
+            background-color: #222;
+            border-radius: 8px;
+            border-left: 4px solid #87CEEB;
+        }
+        
+        .code-example {
+            background-color: #2a2a2a;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            color: #87CEEB;
+            overflow-x: auto;
+            border: 1px solid #3a3a3a;
+            line-height: 1.8;
+        }
+        
+        .code-comment {
+            color: #5f9ea0;
+        }
+        
+        ul, ol {
+            padding-left: 25px;
+            margin: 15px 0;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            color: #e0e0e0;
+        }
+        
+        .important {
+            background-color: rgba(30, 144, 255, 0.1);
+            border-left: 4px solid #1E90FF;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .example-box {
+            background-color: #2a2a2a;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border: 1px solid #3a3a3a;
+        }
+        
+        .example-result {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 15px;
+            min-height: 100px;
+        }
+        
+        .start-btn {
+            display: block;
+            width: 250px;
+            margin: 40px auto;
+            padding: 15px;
+            background: linear-gradient(to right, #1E90FF, #00BFFF);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 0 15px rgba(30, 144, 255, 0.5);
+        }
+        
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(30, 144, 255, 0.7);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #87CEEB;
+            border-top: 1px solid #2a2a2a;
+            margin-top: 30px;
+            font-size: 0.9rem;
+        }
+        
+        button.demo-btn {
+            background-color: #1E90FF;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: background-color 0.3s;
+        }
+        
+        button.demo-btn:hover {
+            background-color: #00BFFF;
+        }
+        
+        #resultContainer {
+            padding: 15px;
+            background-color: #333;
+            border-radius: 5px;
+            margin-top: 15px;
+            min-height: 50px;
+        }
+        
+        .server-output {
+            background-color: #1a1a1a;
+            border: 1px solid #3a3a3a;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 15px 0;
+            font-family: monospace;
+            color: #87CEEB;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .terminal {
+            background-color: #1a1a1a;
+            border: 1px solid #3a3a3a;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: monospace;
+            color: #87CEEB;
+            margin: 20px 0;
+        }
+        
+        .terminal-line {
+            margin-bottom: 5px;
+            display: flex;
+        }
+        
+        .terminal-prompt {
+            color: #5f9ea0;
+            margin-right: 10px;
+        }
+        
+        .api-test {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .api-response {
+            background-color: #1a1a1a;
+            border: 1px solid #3a3a3a;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: monospace;
+            color: #87CEEB;
+            margin-top: 10px;
+            min-height: 80px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .course-content {
+                padding: 20px;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+            
+            .code-example {
+                padding: 15px;
+                font-size: 0.9rem;
+            }
+            
+            .start-btn {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Cours Complet d'Express.js</h1>
+            <p class="subtitle">Le framework web rapide, minimaliste et flexible pour Node.js</p>
+            <div class="course-info">
+                <div class="info-item">Niveau : Intermédiaire</div>
+                <div class="info-item">12 Leçons</div>
+                <div class="info-item">Durée : 6 heures</div>
+                <div class="info-item">Certificat inclus</div>
+            </div>
+        </header>
+        
+        <div class="course-content">
+            <h2>Introduction à Express.js</h2>
+            
+            <div class="section">
+                <h3>Qu'est-ce qu'Express.js ?</h3>
+                <p>Express.js est un framework web minimaliste et flexible pour Node.js qui fournit un ensemble robuste de fonctionnalités pour développer des applications web et mobiles.</p>
+                
+                <div class="important">
+                    <p>Express est le framework backend le plus populaire dans l'écosystème Node.js, servant de base à de nombreux autres frameworks.</p>
+                </div>
+                
+                <h3>Installation et configuration</h3>
+                <div class="terminal">
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span> npm init -y
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span> npm install express
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span> touch app.js
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Premier serveur Express</h3>
+                <div class="code-example">
+                    <span class="code-comment">// app.js</span><br>
+                    const express = require('express');<br>
+                    const app = express();<br>
+                    const PORT = 3000;<br><br>
+                    
+                    <span class="code-comment">// Route de base</span><br>
+                    app.get('/', (req, res) => {<br>
+                    &nbsp;&nbsp;res.send('Bienvenue sur mon serveur Express !');<br>
+                    });<br><br>
+                    
+                    <span class="code-comment">// Démarrer le serveur</span><br>
+                    app.listen(PORT, () => {<br>
+                    &nbsp;&nbsp;console.log(`Serveur Express démarré sur http://localhost:${PORT}`);<br>
+                    });
+                </div>
+                
+                <div class="example-box">
+                    <button class="demo-btn" onclick="startExpressServer()">Démarrer le serveur</button>
+                    <div class="server-output" id="serverOutput">État du serveur: arrêté</div>
+                </div>
+            </div>
+            
+            <h2>Routage et middleware</h2>
+            
+            <div class="section">
+                <h3>Gestion des routes</h3>
+                <p>Express fournit des méthodes pour définir des routes correspondant aux verbes HTTP :</p>
+                
+                <div class="code-example">
+                    <span class="code-comment">// Routes HTTP de base</span><br>
+                    app.get('/api/users', (req, res) => {<br>
+                    &nbsp;&nbsp;res.json([{ id: 1, name: 'Alice' }, { id: 2, name: 'Bob' }]);<br>
+                    });<br><br>
+                    
+                    app.post('/api/users', (req, res) => {<br>
+                    &nbsp;&nbsp;<span class="code-comment">// Créer un nouvel utilisateur</span><br>
+                    &nbsp;&nbsp;res.status(201).json({ message: 'Utilisateur créé' });<br>
+                    });<br><br>
+                    
+                    app.put('/api/users/:id', (req, res) => {<br>
+                    &nbsp;&nbsp;const userId = req.params.id;<br>
+                    &nbsp;&nbsp;res.json({ message: `Utilisateur ${userId} mis à jour` });<br>
+                    });<br><br>
+                    
+                    app.delete('/api/users/:id', (req, res) => {<br>
+                    &nbsp;&nbsp;const userId = req.params.id;<br>
+                    &nbsp;&nbsp;res.json({ message: `Utilisateur ${userId} supprimé` });<br>
+                    });
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Middleware Express</h3>
+                <p>Les middleware sont des fonctions qui ont accès aux objets requête, réponse et au middleware suivant dans le cycle requête-réponse.</p>
+                
+                <div class="code-example">
+                    <span class="code-comment">// Middleware pour parser le JSON</span><br>
+                    app.use(express.json());<br><br>
+                    
+                    <span class="code-comment">// Middleware pour les fichiers statiques</span><br>
+                    app.use(express.static('public'));<br><br>
+                    
+                    <span class="code-comment">// Middleware personnalisé</span><br>
+                    const logger = (req, res, next) => {<br>
+                    &nbsp;&nbsp;console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);<br>
+                    &nbsp;&nbsp;next();<br>
+                    };<br>
+                    app.use(logger);<br><br>
+                    
+                    <span class="code-comment">// Middleware pour la gestion d'erreurs</span><br>
+                    app.use((err, req, res, next) => {<br>
+                    &nbsp;&nbsp;console.error(err.stack);<br>
+                    &nbsp;&nbsp;res.status(500).send('Une erreur est survenue!');<br>
+                    });
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Routeurs Express</h3>
+                <div class="code-example">
+                    <span class="code-comment">// users.js (routeur)</span><br>
+                    const express = require('express');<br>
+                    const router = express.Router();<br><br>
+                    
+                    router.get('/', (req, res) => {<br>
+                    &nbsp;&nbsp;res.send('Liste des utilisateurs');<br>
+                    });<br><br>
+                    
+                    router.get('/:id', (req, res) => {<br>
+                    &nbsp;&nbsp;res.send(`Détails de l'utilisateur ${req.params.id}`);<br>
+                    });<br><br>
+                    
+                    module.exports = router;<br><br>
+                    
+                    <span class="code-comment">// app.js</span><br>
+                    const usersRouter = require('./routes/users');<br>
+                    app.use('/users', usersRouter);
+                </div>
+            </div>
+            
+            <h2>Templates et vues</h2>
+            
+            <div class="section">
+                <h3>Moteurs de templates</h3>
+                <p>Express prend en charge plusieurs moteurs de templates pour générer du HTML côté serveur.</p>
+                
+                <div class="code-example">
+                    <span class="code-comment">// Configuration de EJS</span><br>
+                    app.set('view engine', 'ejs');<br>
+                    app.set('views', './views');<br><br>
+                    
+                    <span class="code-comment">// Route pour afficher une vue</span><br>
+                    app.get('/profile', (req, res) => {<br>
+                    &nbsp;&nbsp;const user = { name: 'Alice', age: 28, hobbies: ['Lecture', 'Voyage'] };<br>
+                    &nbsp;&nbsp;res.render('profile', { user });<br>
+                    });<br><br>
+                    
+                    <span class="code-comment">// views/profile.ejs</span><br>
+                    &lt;h1&gt;Profil de &lt;%= user.name %&gt;&lt;/h1&gt;<br>
+                    &lt;p&gt;Âge: &lt;%= user.age %&gt;&lt;/p&gt;<br>
+                    &lt;h2&gt;Centres d'intérêt:&lt;/h2&gt;<br>
+                    &lt;ul&gt;<br>
+                    &nbsp;&nbsp;&lt;% user.hobbies.forEach(hobby =&gt; { %&gt;<br>
+                    &nbsp;&nbsp;&lt;li&gt;&lt;%= hobby %&gt;&lt;/li&gt;<br>
+                    &nbsp;&nbsp;&lt;% }) %&gt;<br>
+                    &lt;/ul&gt;
+                </div>
+                
+                <div class="example-box">
+                    <button class="demo-btn" onclick="showTemplatePreview()">Aperçu du template</button>
+                    <div id="templatePreview" style="margin-top:15px; display:none; padding:15px; background:#333; border-radius:5px;">
+                        <h3 style="color:#87CEEB;">Profil de Alice</h3>
+                        <p>Âge: 28</p>
+                        <h4 style="color:#87CEEB; margin-top:10px;">Centres d'intérêt:</h4>
+                        <ul>
+                            <li>Lecture</li>
+                            <li>Voyage</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <h2>API REST avec Express</h2>
+            
+            <div class="section">
+                <h3>Création d'une API REST</h3>
+                <div class="code-example">
+                    let users = [<br>
+                    &nbsp;&nbsp;{ id: 1, name: 'Alice', email: 'alice@example.com' },<br>
+                    &nbsp;&nbsp;{ id: 2, name: 'Bob', email: 'bob@example.com' }<br>
+                    ];<br><br>
+                    
+                    <span class="code-comment">// GET /api/users</span><br>
+                    app.get('/api/users', (req, res) => {<br>
+                    &nbsp;&nbsp;res.json(users);<br>
+                    });<br><br>
+                    
+                    <span class="code-comment">// GET /api/users/:id</span><br>
+                    app.get('/api/users/:id', (req, res) => {<br>
+                    &nbsp;&nbsp;const user = users.find(u => u.id === parseInt(req.params.id));<br>
+                    &nbsp;&nbsp;if (!user) return res.status(404).json({ message: 'Utilisateur non trouvé' });<br>
+                    &nbsp;&nbsp;res.json(user);<br>
+                    });<br><br>
+                    
+                    <span class="code-comment">// POST /api/users</span><br>
+                    app.post('/api/users', (req, res) => {<br>
+                    &nbsp;&nbsp;const newUser = {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;id: users.length + 1,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;name: req.body.name,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;email: req.body.email<br>
+                    &nbsp;&nbsp;};<br>
+                    &nbsp;&nbsp;users.push(newUser);<br>
+                    &nbsp;&nbsp;res.status(201).json(newUser);<br>
+                    });<br><br>
+                    
+                    <span class="code-comment">// PUT /api/users/:id</span><br>
+                    app.put('/api/users/:id', (req, res) => {<br>
+                    &nbsp;&nbsp;const user = users.find(u => u.id === parseInt(req.params.id));<br>
+                    &nbsp;&nbsp;if (!user) return res.status(404).json({ message: 'Utilisateur non trouvé' });<br><br>
+                    
+                    &nbsp;&nbsp;user.name = req.body.name || user.name;<br>
+                    &nbsp;&nbsp;user.email = req.body.email || user.email;<br>
+                    &nbsp;&nbsp;res.json(user);<br>
+                    });<br><br>
+                    
+                    <span class="code-comment">// DELETE /api/users/:id</span><br>
+                    app.delete('/api/users/:id', (req, res) => {<br>
+                    &nbsp;&nbsp;users = users.filter(u => u.id !== parseInt(req.params.id));<br>
+                    &nbsp;&nbsp;res.json({ message: 'Utilisateur supprimé' });<br>
+                    });
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Tester l'API</h3>
+                <div class="example-box">
+                    <div class="api-test">
+                        <button class="demo-btn" onclick="testApi('GET')">GET /api/users</button>
+                        <button class="demo-btn" onclick="testApi('POST')">POST /api/users</button>
+                        <button class="demo-btn" onclick="testApi('PUT')">PUT /api/users/1</button>
+                        <button class="demo-btn" onclick="testApi('DELETE')">DELETE /api/users/2</button>
+                    </div>
+                    <div class="api-response" id="apiResponse">
+                        Cliquez sur un bouton pour tester l'API
+                    </div>
+                </div>
+            </div>
+            
+            <h2>Concepts avancés</h2>
+            
+            <div class="section">
+                <h3>Sécurité avec Express</h3>
+                <div class="code-example">
+                    <span class="code-comment">// Helmet - Sécurise les en-têtes HTTP</span><br>
+                    const helmet = require('helmet');<br>
+                    app.use(helmet());<br><br>
+                    
+                    <span class="code-comment">// CORS - Partage des ressources entre origines multiples</span><br>
+                    const cors = require('cors');<br>
+                    app.use(cors());<br><br>
+                    
+                    <span class="code-comment">// Rate limiting - Prévention des attaques brute force</span><br>
+                    const rateLimit = require('express-rate-limit');<br>
+                    const limiter = rateLimit({<br>
+                    &nbsp;&nbsp;windowMs: 15 * 60 * 1000, <span class="code-comment">// 15 minutes</span><br>
+                    &nbsp;&nbsp;max: 100 <span class="code-comment">// limite chaque IP à 100 requêtes par fenêtre</span><br>
+                    });<br>
+                    app.use(limiter);<br><br>
+                    
+                    <span class="code-comment">// Validation des données</span><br>
+                    app.post('/api/users', (req, res) => {<br>
+                    &nbsp;&nbsp;const { error } = validateUser(req.body);<br>
+                    &nbsp;&nbsp;if (error) return res.status(400).send(error.details[0].message);<br>
+                    &nbsp;&nbsp;<span class="code-comment">// ...</span><br>
+                    });
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Authentification JWT</h3>
+                <div class="code-example">
+                    const jwt = require('jsonwebtoken');<br>
+                    const bcrypt = require('bcrypt');<br><br>
+                    
+                    <span class="code-comment">// Route de connexion</span><br>
+                    app.post('/api/login', async (req, res) => {<br>
+                    &nbsp;&nbsp;const { email, password } = req.body;<br>
+                    &nbsp;&nbsp;<span class="code-comment">// Vérifier les identifiants...</span><br>
+                    &nbsp;&nbsp;const user = { id: 1, email: 'test@example.com' };<br>
+                    &nbsp;&nbsp;const token = jwt.sign({ userId: user.id }, 'SECRET_KEY', { expiresIn: '1h' });<br>
+                    &nbsp;&nbsp;res.json({ token });<br>
+                    });<br><br>
+                    
+                    <span class="code-comment">// Middleware d'authentification</span><br>
+                    const auth = (req, res, next) => {<br>
+                    &nbsp;&nbsp;const token = req.header('Authorization');<br>
+                    &nbsp;&nbsp;if (!token) return res.status(401).send('Accès refusé');<br><br>
+                    
+                    &nbsp;&nbsp;try {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const decoded = jwt.verify(token.replace('Bearer ', ''), 'SECRET_KEY');<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;req.user = decoded;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;next();<br>
+                    &nbsp;&nbsp;} catch (err) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;res.status(400).send('Token invalide');<br>
+                    &nbsp;&nbsp;}<br>
+                    };<br><br>
+                    
+                    <span class="code-comment">// Route protégée</span><br>
+                    app.get('/api/protected', auth, (req, res) => {<br>
+                    &nbsp;&nbsp;res.send('Contenu protégé accessible');<br>
+                    });
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Déploiement d'une application Express</h3>
+                <div class="terminal">
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span> npm install pm2 -g
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span> pm2 start app.js --name "mon-app-express"
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span> pm2 save
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span> pm2 startup
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span> pm2 monit
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">#</span> Nginx config pour le reverse proxy
+                    </div>
+                    <div class="terminal-line">
+                        location / {<br>
+                        &nbsp;&nbsp;proxy_pass http://localhost:3000;<br>
+                        &nbsp;&nbsp;proxy_http_version 1.1;<br>
+                        &nbsp;&nbsp;proxy_set_header Upgrade $http_upgrade;<br>
+                        &nbsp;&nbsp;proxy_set_header Connection 'upgrade';<br>
+                        &nbsp;&nbsp;proxy_set_header Host $host;<br>
+                        &nbsp;&nbsp;proxy_cache_bypass $http_upgrade;<br>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </div>
+    <script>
+        // Simulation de serveur Express
+        function startExpressServer() {
+            const output = document.getElementById('serverOutput');
+            output.innerHTML = "État du serveur: démarrage...";
+            
+            setTimeout(() => {
+                output.innerHTML = `
+                    <strong>État du serveur: démarré</strong>
+                    <div style="margin-top:10px">
+                        <div>Serveur Express démarré sur http://localhost:3000</div>
+                        <div>Routes disponibles:</div>
+                        <ul style="margin-top:10px">
+                            <li>GET /</li>
+                            <li>GET /api/users</li>
+                            <li>POST /api/users</li>
+                            <li>GET /profile</li>
+                        </ul>
+                        <div style="margin-top:10px">
+                            <button class="demo-btn" onclick="stopExpressServer()">Arrêter le serveur</button>
+                        </div>
+                    </div>
+                `;
+            }, 1500);
+        }
+        
+        function stopExpressServer() {
+            const output = document.getElementById('serverOutput');
+            output.innerHTML = "État du serveur: arrêté";
+        }
+        
+        function showTemplatePreview() {
+            const preview = document.getElementById('templatePreview');
+            preview.style.display = 'block';
+        }
+        
+        // Simuler les appels API
+        function testApi(method) {
+            const responseContainer = document.getElementById('apiResponse');
+            let response;
+            
+            switch(method) {
+                case 'GET':
+                    response = [
+                        { id: 1, name: 'Alice', email: 'alice@example.com' },
+                        { id: 2, name: 'Bob', email: 'bob@example.com' }
+                    ];
+                    break;
+                case 'POST':
+                    response = { 
+                        id: 3, 
+                        name: 'Charlie', 
+                        email: 'charlie@example.com',
+                        message: 'Utilisateur créé avec succès'
+                    };
+                    break;
+                case 'PUT':
+                    response = { 
+                        id: 1, 
+                        name: 'Alice Smith', 
+                        email: 'alice.smith@example.com',
+                        message: 'Utilisateur mis à jour'
+                    };
+                    break;
+                case 'DELETE':
+                    response = { 
+                        message: 'Utilisateur avec ID 2 supprimé',
+                        remainingUsers: [
+                            { id: 1, name: 'Alice', email: 'alice@example.com' }
+                        ]
+                    };
+                    break;
+            }
+            
+            responseContainer.innerHTML = `<strong>${method} Response:</strong>\n${JSON.stringify(response, null, 2)}`;
+        }
+    </script>
+</body>
+</html>

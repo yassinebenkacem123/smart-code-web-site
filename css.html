@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours Complet de CSS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #000;
+            color: #f0f8ff;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #87CEEB;
+        }
+        
+        h1 {
+            color: #87CEEB;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(135, 206, 235, 0.3);
+        }
+        
+        .subtitle {
+            color: #B0E0E6;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .course-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .info-item {
+            background-color: #1a1a1a;
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: #87CEEB;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .course-content {
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 20px rgba(135, 206, 235, 0.1);
+        }
+        
+        h2 {
+            color: #87CEEB;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #2a2a2a;
+            font-size: 1.8rem;
+        }
+        
+        h3 {
+            color: #87CEEB;
+            margin: 25px 0 15px;
+            font-size: 1.4rem;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            color: #e0e0e0;
+        }
+        
+        .section {
+            margin-bottom: 35px;
+            padding: 20px;
+            background-color: #222;
+            border-radius: 8px;
+            border-left: 4px solid #87CEEB;
+        }
+        
+        .code-example {
+            background-color: #2a2a2a;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            color: #87CEEB;
+            overflow-x: auto;
+            border: 1px solid #3a3a3a;
+            line-height: 1.8;
+        }
+        
+        .code-comment {
+            color: #5f9ea0;
+        }
+        
+        ul, ol {
+            padding-left: 25px;
+            margin: 15px 0;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            color: #e0e0e0;
+        }
+        
+        .important {
+            background-color: rgba(30, 144, 255, 0.1);
+            border-left: 4px solid #1E90FF;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .example-box {
+            background-color: #2a2a2a;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border: 1px solid #3a3a3a;
+        }
+        
+        .example-result {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 15px;
+            min-height: 100px;
+        }
+        
+        .start-btn {
+            display: block;
+            width: 250px;
+            margin: 40px auto;
+            padding: 15px;
+            background: linear-gradient(to right, #1E90FF, #00BFFF);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 0 15px rgba(30, 144, 255, 0.5);
+        }
+        
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(30, 144, 255, 0.7);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #87CEEB;
+            border-top: 1px solid #2a2a2a;
+            margin-top: 30px;
+            font-size: 0.9rem;
+        }
+        
+        /* Exemples pratiques */
+        .box-model-example {
+            width: 200px;
+            height: 100px;
+            padding: 20px;
+            border: 5px solid #1E90FF;
+            margin: 30px auto;
+            background-color: #87CEEB;
+            color: #000;
+            text-align: center;
+            line-height: 100px;
+        }
+        
+        .flex-container {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .flex-item {
+            background-color: #87CEEB;
+            padding: 15px;
+            border-radius: 5px;
+            flex: 1;
+            text-align: center;
+            color: #000;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .grid-item {
+            background-color: #87CEEB;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            color: #000;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .course-content {
+                padding: 20px;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+            
+            .code-example {
+                padding: 15px;
+                font-size: 0.9rem;
+            }
+            
+            .start-btn {
+                width: 90%;
+            }
+            
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Cours Complet de CSS</h1>
+            <p class="subtitle">Apprenez à styliser vos pages web avec élégance</p>
+        </header>
+        <div class="course-content">
+            <h2>Introduction au CSS</h2>
+            
+            <div class="section">
+                <h3>Qu'est-ce que le CSS ?</h3>
+                <p>CSS (Cascading Style Sheets) est un langage de style utilisé pour décrire la présentation d'un document HTML. Il permet de contrôler l'apparence des éléments d'une page web.</p>
+                
+                <div class="important">
+                    <p>Le CSS sépare le contenu (HTML) de la présentation (styles), ce qui améliore la maintenabilité des sites web.</p>
+                </div>
+                
+                <h3>Syntaxe CSS de base</h3>
+                <div class="code-example">
+                    <span class="code-comment">/* Sélecteur */</span><br>
+                    sélecteur {<br>
+                    &nbsp;&nbsp;<span class="code-comment">/* Propriété : Valeur; */</span><br>
+                    &nbsp;&nbsp;propriété: valeur;<br>
+                    }
+                </div>
+                
+                <h3>Méthodes d'intégration du CSS</h3>
+                <ul>
+                    <li><strong>CSS interne :</strong> Utilisation de la balise &lt;style&gt; dans le &lt;head&gt;</li>
+                    <li><strong>CSS externe :</strong> Liaison avec un fichier .css via &lt;link&gt;</li>
+                    <li><strong>CSS en ligne :</strong> Utilisation de l'attribut style sur les éléments HTML</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h3>Sélecteurs CSS</h3>
+                <p>Les sélecteurs permettent de cibler les éléments HTML à styliser :</p>
+                
+                <div class="code-example">
+                    <span class="code-comment">/* Sélecteur d'élément */</span><br>
+                    p { color: blue; }<br><br>
+                    
+                    <span class="code-comment">/* Sélecteur de classe */</span><br>
+                    .ma-classe { font-size: 16px; }<br><br>
+                    
+                    <span class="code-comment">/* Sélecteur d'identifiant */</span><br>
+                    #mon-id { background: yellow; }<br><br>
+                    
+                    <span class="code-comment">/* Sélecteur d'attribut */</span><br>
+                    a[target="_blank"] { color: red; }<br><br>
+                    
+                    <span class="code-comment">/* Sélecteurs combinés */</span><br>
+                    div p { margin: 10px; } <span class="code-comment">/* Descendant */</span><br>
+                    div > p { padding: 5px; } <span class="code-comment">/* Enfant direct */</span><br>
+                    h1 + p { font-weight: bold; } <span class="code-comment">/* Adjacent */</span><br>
+                    h2 ~ p { font-style: italic; } <span class="code-comment">/* Frère */</span>
+                </div>
+            </div>
+            
+            <h2>Propriétés CSS essentielles</h2>
+            
+            <div class="section">
+                <h3>Couleurs et arrière-plans</h3>
+                <div class="code-example">
+                    body {<br>
+                    &nbsp;&nbsp;color: #FFFFFF; <span class="code-comment">/* Couleur du texte */</span><br>
+                    &nbsp;&nbsp;background-color: #000000; <span class="code-comment">/* Couleur d'arrière-plan */</span><br>
+                    &nbsp;&nbsp;background-image: url('image.jpg'); <span class="code-comment">/* Image de fond */</span><br>
+                    &nbsp;&nbsp;background-size: cover; <span class="code-comment">/* Taille de l'image */</span><br>
+                    &nbsp;&nbsp;background-position: center; <span class="code-comment">/* Position de l'image */</span><br>
+                    }
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Texte et polices</h3>
+                <div class="code-example">
+                    p {<br>
+                    &nbsp;&nbsp;font-family: Arial, sans-serif; <span class="code-comment">/* Police */</span><br>
+                    &nbsp;&nbsp;font-size: 16px; <span class="code-comment">/* Taille */</span><br>
+                    &nbsp;&nbsp;font-weight: bold; <span class="code-comment">/* Gras */</span><br>
+                    &nbsp;&nbsp;text-align: center; <span class="code-comment">/* Alignement */</span><br>
+                    &nbsp;&nbsp;line-height: 1.6; <span class="code-comment">/* Hauteur de ligne */</span><br>
+                    &nbsp;&nbsp;text-decoration: underline; <span class="code-comment">/* Soulignement */</span><br>
+                    }
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Modèle de boîte (Box Model)</h3>
+                <p>Chaque élément HTML est représenté comme une boîte composée de :</p>
+                <ul>
+                    <li>Contenu (content)</li>
+                    <li>Remplissage (padding)</li>
+                    <li>Bordure (border)</li>
+                    <li>Marge (margin)</li>
+                </ul>
+                
+                <div class="code-example">
+                    div {<br>
+                    &nbsp;&nbsp;width: 300px; <span class="code-comment">/* Largeur du contenu */</span><br>
+                    &nbsp;&nbsp;height: 200px; <span class="code-comment">/* Hauteur du contenu */</span><br>
+                    &nbsp;&nbsp;padding: 20px; <span class="code-comment">/* Remplissage intérieur */</span><br>
+                    &nbsp;&nbsp;border: 5px solid blue; <span class="code-comment">/* Bordure */</span><br>
+                    &nbsp;&nbsp;margin: 30px; <span class="code-comment">/* Marge extérieure */</span><br>
+                    &nbsp;&nbsp;box-sizing: border-box; <span class="code-comment">/* Modèle alternatif */</span><br>
+                    }
+                </div>
+                
+                <div class="example-box">
+                    <div class="box-model-example">Exemple de modèle de boîte</div>
+                </div>
+            </div>
+            
+            <h2>Disposition et mise en page</h2>
+            
+            <div class="section">
+                <h3>Flexbox</h3>
+                <p>Module de mise en page unidimensionnel pour répartir l'espace :</p>
+                
+                <div class="code-example">
+                    .conteneur {<br>
+                    &nbsp;&nbsp;display: flex;<br>
+                    &nbsp;&nbsp;flex-direction: row; <span class="code-comment">/* row, column */</span><br>
+                    &nbsp;&nbsp;justify-content: center; <span class="code-comment">/* Alignement horizontal */</span><br>
+                    &nbsp;&nbsp;align-items: center; <span class="code-comment">/* Alignement vertical */</span><br>
+                    &nbsp;&nbsp;flex-wrap: wrap; <span class="code-comment">/* Passage à la ligne */</span><br>
+                    }<br><br>
+                    
+                    .element {<br>
+                    &nbsp;&nbsp;flex: 1; <span class="code-comment">/* Répartition de l'espace */</span><br>
+                    }
+                </div>
+                
+                <div class="example-box">
+                    <div class="flex-container">
+                        <div class="flex-item">Élément 1</div>
+                        <div class="flex-item">Élément 2</div>
+                        <div class="flex-item">Élément 3</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>CSS Grid</h3>
+                <p>Système de mise en page bidimensionnel :</p>
+                
+                <div class="code-example">
+                    .conteneur {<br>
+                    &nbsp;&nbsp;display: grid;<br>
+                    &nbsp;&nbsp;grid-template-columns: 1fr 1fr 1fr; <span class="code-comment">/* 3 colonnes égales */</span><br>
+                    &nbsp;&nbsp;grid-template-rows: 100px auto;<br>
+                    &nbsp;&nbsp;gap: 20px; <span class="code-comment">/* Espace entre les éléments */</span><br>
+                    }<br><br>
+                    
+                    .element {<br>
+                    &nbsp;&nbsp;grid-column: span 2; <span class="code-comment">/* Occupe 2 colonnes */</span><br>
+                    &nbsp;&nbsp;grid-row: 1; <span class="code-comment">/* Position sur la 1ère ligne */</span><br>
+                    }
+                </div>
+                
+                <div class="example-box">
+                    <div class="grid-container">
+                        <div class="grid-item">1</div>
+                        <div class="grid-item">2</div>
+                        <div class="grid-item">3</div>
+                        <div class="grid-item">4</div>
+                        <div class="grid-item">5</div>
+                        <div class="grid-item">6</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Positionnement</h3>
+                <p>Contrôle de la position des éléments :</p>
+                
+                <div class="code-example">
+                    .element {<br>
+                    &nbsp;&nbsp;position: static; <span class="code-comment">/* Par défaut */</span><br>
+                    &nbsp;&nbsp;position: relative; <span class="code-comment">/* Position relative */</span><br>
+                    &nbsp;&nbsp;position: absolute; <span class="code-comment">/* Position absolue */</span><br>
+                    &nbsp;&nbsp;position: fixed; <span class="code-comment">/* Position fixe */</span><br>
+                    &nbsp;&nbsp;position: sticky; <span class="code-comment">/* Position collante */</span><br>
+                    &nbsp;&nbsp;top: 10px;<br>
+                    &nbsp;&nbsp;right: 20px;<br>
+                    &nbsp;&nbsp;z-index: 10; <span class="code-comment">/* Ordre d'empilement */</span><br>
+                    }
+                </div>
+            </div>
+            
+            <h2>Effets avancés et responsivité</h2>
+            
+            <div class="section">
+                <h3>Transitions et animations</h3>
+                <div class="code-example">
+                    <span class="code-comment">/* Transition simple */</span><br>
+                    .bouton {<br>
+                    &nbsp;&nbsp;transition: background-color 0.3s ease;<br>
+                    }<br>
+                    .bouton:hover {<br>
+                    &nbsp;&nbsp;background-color: blue;<br>
+                    }<br><br>
+                    
+                    <span class="code-comment">/* Animation avec keyframes */</span><br>
+                    @keyframes example {<br>
+                    &nbsp;&nbsp;0% { transform: rotate(0deg); }<br>
+                    &nbsp;&nbsp;100% { transform: rotate(360deg); }<br>
+                    }<br>
+                    .element {<br>
+                    &nbsp;&nbsp;animation: example 2s infinite;<br>
+                    }
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Design Responsive</h3>
+                <p>Adapter le design à différentes tailles d'écran :</p>
+                
+                <div class="code-example">
+                    <span class="code-comment">/* Media queries */</span><br>
+                    @media screen and (max-width: 768px) {<br>
+                    &nbsp;&nbsp;.conteneur {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;flex-direction: column;<br>
+                    &nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;.element {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;width: 100%;<br>
+                    &nbsp;&nbsp;}<br>
+                    }<br><br>
+                    
+                    <span class="code-comment">/* Unités responsives */</span><br>
+                    .element {<br>
+                    &nbsp;&nbsp;width: 100%; <span class="code-comment">/* Pourcentage */</span><br>
+                    &nbsp;&nbsp;padding: 2vw; <span class="code-comment">/* Viewport Width */</span><br>
+                    &nbsp;&nbsp;font-size: clamp(16px, 3vw, 24px); <span class="code-comment">/* Taille fluide */</span><br>
+                    }
+                </div>
+            </div>
+            
+        </div>
+        
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours Complet de Node.js</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #000;
+            color: #f0f8ff;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #87CEEB;
+        }
+        
+        h1 {
+            color: #87CEEB;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(135, 206, 235, 0.3);
+        }
+        
+        .subtitle {
+            color: #B0E0E6;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .course-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .info-item {
+            background-color: #1a1a1a;
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: #87CEEB;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .course-content {
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 20px rgba(135, 206, 235, 0.1);
+        }
+        
+        h2 {
+            color: #87CEEB;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #2a2a2a;
+            font-size: 1.8rem;
+        }
+        
+        h3 {
+            color: #87CEEB;
+            margin: 25px 0 15px;
+            font-size: 1.4rem;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            color: #e0e0e0;
+        }
+        
+        .section {
+            margin-bottom: 35px;
+            padding: 20px;
+            background-color: #222;
+            border-radius: 8px;
+            border-left: 4px solid #87CEEB;
+        }
+        
+        .code-example {
+            background-color: #2a2a2a;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            color: #87CEEB;
+            overflow-x: auto;
+            border: 1px solid #3a3a3a;
+            line-height: 1.8;
+        }
+        
+        .code-comment {
+            color: #5f9ea0;
+        }
+        
+        ul, ol {
+            padding-left: 25px;
+            margin: 15px 0;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            color: #e0e0e0;
+        }
+        
+        .important {
+            background-color: rgba(30, 144, 255, 0.1);
+            border-left: 4px solid #1E90FF;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .example-box {
+            background-color: #2a2a2a;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border: 1px solid #3a3a3a;
+        }
+        
+        .example-result {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 15px;
+            min-height: 100px;
+        }
+        
+        .start-btn {
+            display: block;
+            width: 250px;
+            margin: 40px auto;
+            padding: 15px;
+            background: linear-gradient(to right, #1E90FF, #00BFFF);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 0 15px rgba(30, 144, 255, 0.5);
+        }
+        
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(30, 144, 255, 0.7);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #87CEEB;
+            border-top: 1px solid #2a2a2a;
+            margin-top: 30px;
+            font-size: 0.9rem;
+        }
+        
+        button.demo-btn {
+            background-color: #1E90FF;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: background-color 0.3s;
+        }
+        
+        button.demo-btn:hover {
+            background-color: #00BFFF;
+        }
+        
+        #resultContainer {
+            padding: 15px;
+            background-color: #333;
+            border-radius: 5px;
+            margin-top: 15px;
+            min-height: 50px;
+        }
+        
+        .server-output {
+            background-color: #1a1a1a;
+            border: 1px solid #3a3a3a;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 15px 0;
+            font-family: monospace;
+            color: #87CEEB;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .terminal {
+            background-color: #1a1a1a;
+            border: 1px solid #3a3a3a;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: monospace;
+            color: #87CEEB;
+            margin: 20px 0;
+        }
+        
+        .terminal-line {
+            margin-bottom: 5px;
+            display: flex;
+        }
+        
+        .terminal-prompt {
+            color: #5f9ea0;
+            margin-right: 10px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .course-content {
+                padding: 20px;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+            
+            .code-example {
+                padding: 15px;
+                font-size: 0.9rem;
+            }
+            
+            .start-btn {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Cours Complet de Node.js</h1>
+            <p class="subtitle">Apprenez à créer des applications serveur avec JavaScript</p>
+        </header>
+        
+        <div class="course-content">
+            <h2>Introduction à Node.js</h2>
+            
+            <div class="section">
+                <h3>Qu'est-ce que Node.js ?</h3>
+                <p>Node.js est un environnement d'exécution JavaScript côté serveur basé sur le moteur JavaScript V8 de Chrome. Il permet de créer des applications réseau scalables et performantes.</p>
+                
+                <div class="important">
+                    <p>Node.js utilise une architecture non-bloquante et orientée événements, ce qui le rend idéal pour les applications en temps réel et les API.</p>
+                </div>
+                
+                <h3>Installation et premier projet</h3>
+                <p>Pour commencer avec Node.js :</p>
+                
+                <div class="terminal">
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span> node -v
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span> npm -v
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span> mkdir mon-projet-node
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span> cd mon-projet-node
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span> npm init -y
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Modules Node.js</h3>
+                <p>Node.js utilise un système de modules pour organiser le code :</p>
+                
+                <div class="code-example">
+                    <span class="code-comment">// Importer des modules intégrés</span><br>
+                    const http = require('http');<br>
+                    const fs = require('fs');<br><br>
+                    
+                    <span class="code-comment">// Créer un module personnalisé</span><br>
+                    <span class="code-comment">// math.js</span><br>
+                    exports.add = (a, b) => a + b;<br>
+                    exports.multiply = (a, b) => a * b;<br><br>
+                    
+                    <span class="code-comment">// Utiliser le module personnalisé</span><br>
+                    const math = require('./math');<br>
+                    console.log(math.add(2, 3)); <span class="code-comment">// 5</span>
+                </div>
+            </div>
+            
+            <h2>Création de serveurs</h2>
+            
+            <div class="section">
+                <h3>Serveur HTTP de base</h3>
+                <div class="code-example">
+                    const http = require('http');<br><br>
+                    
+                    const server = http.createServer((req, res) => {<br>
+                    &nbsp;&nbsp;res.writeHead(200, {'Content-Type': 'text/plain'});<br>
+                    &nbsp;&nbsp;res.end('Bonjour depuis Node.js!\n');<br>
+                    });<br><br>
+                    
+                    const PORT = 3000;<br>
+                    server.listen(PORT, () => {<br>
+                    &nbsp;&nbsp;console.log(`Serveur en écoute sur http://localhost:${PORT}`);<br>
+                    });
+                </div>
+                
+                <div class="example-box">
+                    <button class="demo-btn" onclick="startServer()">Démarrer le serveur</button>
+                    <div class="server-output" id="serverOutput">État du serveur: arrêté</div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Express.js - Framework web</h3>
+                <div class="code-example">
+                    <span class="code-comment">// Installation: npm install express</span><br>
+                    const express = require('express');<br>
+                    const app = express();<br>
+                    const PORT = 3000;<br><br>
+                    
+                    <span class="code-comment">// Route simple</span><br>
+                    app.get('/', (req, res) => {<br>
+                    &nbsp;&nbsp;res.send('Accueil Express!');<br>
+                    });<br><br>
+                    
+                    <span class="code-comment">// Route avec paramètre</span><br>
+                    app.get('/utilisateur/:id', (req, res) => {<br>
+                    &nbsp;&nbsp;res.send(`Utilisateur ID: ${req.params.id}`);<br>
+                    });<br><br>
+                    
+                    app.listen(PORT, () => {<br>
+                    &nbsp;&nbsp;console.log(`Serveur Express sur port ${PORT}`);<br>
+                    });
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Middleware Express</h3>
+                <div class="code-example">
+                    <span class="code-comment">// Middleware pour journalisation</span><br>
+                    app.use((req, res, next) => {<br>
+                    &nbsp;&nbsp;console.log(`${req.method} ${req.url}`);<br>
+                    &nbsp;&nbsp;next(); <span class="code-comment">// Passe au middleware suivant</span><br>
+                    });<br><br>
+                    
+                    <span class="code-comment">// Middleware pour parser le JSON</span><br>
+                    app.use(express.json());<br><br>
+                    
+                    <span class="code-comment">// Middleware pour fichiers statiques</span><br>
+                    app.use(express.static('public'));
+                </div>
+            </div>
+            
+            <h2>Interaction avec les données</h2>
+            
+            <div class="section">
+                <h3>Accès aux bases de données</h3>
+                <div class="code-example">
+                    <span class="code-comment">// MongoDB avec Mongoose</span><br>
+                    <span class="code-comment">// npm install mongoose</span><br>
+                    const mongoose = require('mongoose');<br><br>
+                    
+                    mongoose.connect('mongodb://localhost/mabase', {<br>
+                    &nbsp;&nbsp;useNewUrlParser: true,<br>
+                    &nbsp;&nbsp;useUnifiedTopology: true<br>
+                    });<br><br>
+                    
+                    <span class="code-comment">// Définition d'un schéma</span><br>
+                    const userSchema = new mongoose.Schema({<br>
+                    &nbsp;&nbsp;name: String,<br>
+                    &nbsp;&nbsp;email: String,<br>
+                    &nbsp;&nbsp;age: Number<br>
+                    });<br><br>
+                    
+                    <span class="code-comment">// Création d'un modèle</span><br>
+                    const User = mongoose.model('User', userSchema);
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>CRUD avec Express et MongoDB</h3>
+                <div class="code-example">
+                    <span class="code-comment">// Créer un utilisateur</span><br>
+                    app.post('/users', async (req, res) => {<br>
+                    &nbsp;&nbsp;const user = new User(req.body);<br>
+                    &nbsp;&nbsp;await user.save();<br>
+                    &nbsp;&nbsp;res.status(201).send(user);<br>
+                    });<br><br>
+                    
+                    <span class="code-comment">// Lire tous les utilisateurs</span><br>
+                    app.get('/users', async (req, res) => {<br>
+                    &nbsp;&nbsp;const users = await User.find({});<br>
+                    &nbsp;&nbsp;res.send(users);<br>
+                    });<br><br>
+                    
+                    <span class="code-comment">// Mettre à jour un utilisateur</span><br>
+                    app.put('/users/:id', async (req, res) => {<br>
+                    &nbsp;&nbsp;const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });<br>
+                    &nbsp;&nbsp;res.send(user);<br>
+                    });<br><br>
+                    
+                    <span class="code-comment">// Supprimer un utilisateur</span><br>
+                    app.delete('/users/:id', async (req, res) => {<br>
+                    &nbsp;&nbsp;await User.findByIdAndDelete(req.params.id);<br>
+                    &nbsp;&nbsp;res.status(204).send();<br>
+                    });
+                </div>
+            </div>
+            
+            <h2>Concepts avancés</h2>
+            
+            <div class="section">
+                <h3>Gestion des erreurs</h3>
+                <div class="code-example">
+                    <span class="code-comment">// Middleware pour erreurs 404</span><br>
+                    app.use((req, res, next) => {<br>
+                    &nbsp;&nbsp;res.status(404).send("Désolé, cette page n'existe pas!");<br>
+                    });<br><br>
+                    
+                    <span class="code-comment">// Gestionnaire d'erreurs global</span><br>
+                    app.use((err, req, res, next) => {<br>
+                    &nbsp;&nbsp;console.error(err.stack);<br>
+                    &nbsp;&nbsp;res.status(500).send('Une erreur est survenue!');<br>
+                    });<br><br>
+                    
+                    <span class="code-comment">// Avec async/await</span><br>
+                    app.get('/users/:id', async (req, res, next) => {<br>
+                    &nbsp;&nbsp;try {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const user = await User.findById(req.params.id);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;if (!user) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return res.status(404).send('Utilisateur non trouvé');<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;res.send(user);<br>
+                    &nbsp;&nbsp;} catch (err) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;next(err);<br>
+                    &nbsp;&nbsp;}<br>
+                    });
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Authentification avec JWT</h3>
+                <div class="code-example">
+                    <span class="code-comment">// npm install jsonwebtoken bcrypt</span><br>
+                    const jwt = require('jsonwebtoken');<br>
+                    const bcrypt = require('bcrypt');<br><br>
+                    
+                    <span class="code-comment">// Inscription</span><br>
+                    app.post('/register', async (req, res) => {<br>
+                    &nbsp;&nbsp;const { email, password } = req.body;<br>
+                    &nbsp;&nbsp;const hashedPassword = await bcrypt.hash(password, 10);<br>
+                    &nbsp;&nbsp;const user = new User({ email, password: hashedPassword });<br>
+                    &nbsp;&nbsp;await user.save();<br>
+                    &nbsp;&nbsp;res.status(201).send('Utilisateur créé');<br>
+                    });<br><br>
+                    
+                    <span class="code-comment">// Connexion</span><br>
+                    app.post('/login', async (req, res) => {<br>
+                    &nbsp;&nbsp;const { email, password } = req.body;<br>
+                    &nbsp;&nbsp;const user = await User.findOne({ email });<br>
+                    &nbsp;&nbsp;if (!user) return res.status(400).send('Email ou mot de passe invalide');<br><br>
+                    
+                    &nbsp;&nbsp;const validPassword = await bcrypt.compare(password, user.password);<br>
+                    &nbsp;&nbsp;if (!validPassword) return res.status(400).send('Email ou mot de passe invalide');<br><br>
+                    
+                    &nbsp;&nbsp;const token = jwt.sign({ _id: user._id }, 'SECRET_KEY');<br>
+                    &nbsp;&nbsp;res.header('Authorization', token).send(token);<br>
+                    });<br><br>
+                    
+                    <span class="code-comment">// Middleware d'authentification</span><br>
+                    function auth(req, res, next) {<br>
+                    &nbsp;&nbsp;const token = req.header('Authorization');<br>
+                    &nbsp;&nbsp;if (!token) return res.status(401).send('Accès refusé');<br><br>
+                    
+                    &nbsp;&nbsp;try {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const verified = jwt.verify(token, 'SECRET_KEY');<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;req.user = verified;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;next();<br>
+                    &nbsp;&nbsp;} catch (err) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;res.status(400).send('Token invalide');<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Déploiement avec PM2</h3>
+                <div class="terminal">
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span> npm install pm2 -g
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span> pm2 start app.js --name "mon-api"
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span> pm2 list
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span> pm2 monit
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span> pm2 save
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span> pm2 startup
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+   
+    </div>
+
+    
+</body>
+</html>

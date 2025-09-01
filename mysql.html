@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours Complet de MySQL</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+ background:#000000;
+             color: #f0f8ff;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+            background:#000000
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 0;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(135, 206, 235, 0.1) 0%, rgba(0,0,0,0) 70%);
+            z-index: -1;
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        h1 {
+            color: #87CEEB;
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(135, 206, 235, 0.5);
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(to right, #1E90FF, #00BFFF);
+            border-radius: 2px;
+        }
+        
+        .subtitle {
+            color: #B0E0E6;
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .course-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .info-item {
+            background: rgba(26, 26, 26, 0.7);
+            padding: 12px 25px;
+            border-radius: 30px;
+            color: #87CEEB;
+            font-weight: bold;
+            font-size: 1rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(135, 206, 235, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .info-item i {
+            color: #1E90FF;
+        }
+        
+        .course-content {
+            background: rgba(26, 26, 26, 0.8);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(135, 206, 235, 0.2);
+        }
+        
+        h2 {
+            color: #87CEEB;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #2a2a2a;
+            font-size: 2.2rem;
+            position: relative;
+        }
+        
+        h2::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 120px;
+            height: 3px;
+            background: linear-gradient(to right, #1E90FF, #00BFFF);
+        }
+        
+        h3 {
+            color: #87CEEB;
+            margin: 30px 0 20px;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        h3 i {
+            color: #1E90FF;
+            font-size: 1.4rem;
+        }
+        
+        p {
+            margin-bottom: 20px;
+            color: #e0e0e0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: rgba(34, 34, 34, 0.7);
+            border-radius: 12px;
+            border-left: 5px solid #87CEEB;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .code-example {
+            background: rgba(42, 42, 42, 0.9);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            color: #87CEEB;
+            overflow-x: auto;
+            border: 1px solid #3a3a3a;
+            line-height: 1.8;
+            position: relative;
+        }
+        
+        .code-example::before {
+            content: "SQL";
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: #1E90FF;
+            color: white;
+            padding: 3px 10px;
+            font-size: 0.8rem;
+            border-radius: 0 0 0 5px;
+        }
+        
+        .code-comment {
+            color: #5f9ea0;
+        }
+        
+        .sql-keyword {
+            color: #FF79C6;
+            font-weight: bold;
+        }
+        
+        .sql-function {
+            color: #50FA7B;
+        }
+        
+        .sql-string {
+            color: #F1FA8C;
+        }
+        
+        ul, ol {
+            padding-left: 30px;
+            margin: 20px 0;
+        }
+        
+        li {
+            margin-bottom: 15px;
+            color: #e0e0e0;
+            font-size: 1.1rem;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        li::before {
+            content: "•";
+            color: #1E90FF;
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -5px;
+        }
+        
+        .important {
+            background: rgba(30, 144, 255, 0.15);
+            border-left: 5px solid #1E90FF;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .important::before {
+            content: "!";
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            font-size: 8rem;
+            color: rgba(30, 144, 255, 0.1);
+            font-weight: bold;
+            z-index: 0;
+        }
+        
+        .example-box {
+            background: rgba(42, 42, 42, 0.9);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+            border: 1px solid #3a3a3a;
+            position: relative;
+        }
+        
+        .example-box h4 {
+            color: #87CEEB;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .example-result {
+            background: rgba(51, 51, 51, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            min-height: 100px;
+            font-family: 'Fira Code', monospace;
+            overflow-x: auto;
+        }
+        
+        .start-btn {
+            display: block;
+            width: 300px;
+            margin: 50px auto;
+            padding: 18px;
+            background: linear-gradient(to right, #1E90FF, #00BFFF);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 20px rgba(30, 144, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .start-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+        
+        .start-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(30, 144, 255, 0.7);
+        }
+        
+        .start-btn:hover::before {
+            left: 100%;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #87CEEB;
+            border-top: 1px solid #2a2a2a;
+            margin-top: 30px;
+            font-size: 1rem;
+        }
+        
+        button.demo-btn {
+            background: linear-gradient(to right, #1E90FF, #00BFFF);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 15px 0;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        button.demo-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(30, 144, 255, 0.5);
+        }
+        
+        #resultContainer {
+            padding: 20px;
+            background: rgba(51, 51, 51, 0.9);
+            border-radius: 8px;
+            margin-top: 20px;
+            min-height: 80px;
+            font-family: 'Fira Code', monospace;
+        }
+        
+        .server-output {
+            background: rgba(26, 26, 26, 0.9);
+            border: 1px solid #3a3a3a;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'Fira Code', monospace;
+            color: #87CEEB;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .terminal {
+            background: rgba(26, 26, 26, 0.9);
+            border: 1px solid #3a3a3a;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Fira Code', monospace;
+            color: #87CEEB;
+            margin: 25px 0;
+            position: relative;
+        }
+        
+        .terminal::before {
+            content: "Terminal";
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: #1E90FF;
+            color: white;
+            padding: 3px 10px;
+            font-size: 0.8rem;
+            border-radius: 0 0 5px 0;
+        }
+        
+        .terminal-line {
+            margin-bottom: 8px;
+            display: flex;
+        }
+        
+        .terminal-prompt {
+            color: #50FA7B;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(42, 42, 42, 0.9);
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #3a3a3a;
+        }
+        
+        th {
+            background: rgba(30, 144, 255, 0.3);
+            color: #87CEEB;
+            font-weight: bold;
+        }
+        
+        tr:nth-child(even) {
+            background: rgba(51, 51, 51, 0.5);
+        }
+        
+        .schema-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .schema {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(42, 42, 42, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #3a3a3a;
+        }
+        
+        .schema h4 {
+            color: #87CEEB;
+            margin-bottom: 15px;
+            text-align: center;
+            border-bottom: 1px solid #3a3a3a;
+            padding-bottom: 10px;
+        }
+        
+        .progress-container {
+            background: rgba(42, 42, 42, 0.9);
+            border-radius: 50px;
+            height: 20px;
+            margin: 40px 0;
+            overflow: hidden;
+            border: 1px solid #3a3a3a;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, #1E90FF, #00BFFF);
+            width: 65%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 20px;
+            color: white;
+            font-weight: bold;
+            font-size: 0.8rem;
+            animation: progress 2s ease-in-out;
+        }
+        
+        @keyframes progress {
+            0% { width: 0; }
+            100% { width: 65%; }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .course-content {
+                padding: 25px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .code-example {
+                padding: 20px;
+                font-size: 0.9rem;
+            }
+            
+            .start-btn {
+                width: 90%;
+            }
+            
+            .schema-box {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-database"></i> Cours Complet de MySQL</h1>
+            <p class="subtitle">Maîtrisez le langage SQL et l'administration de bases de données relationnelles</p>
+
+        </header>
+        
+
+        
+        <div class="course-content">
+            <h2><i class="fas fa-database"></i> Introduction à MySQL</h2>
+            
+            <div class="section">
+                <h3><i class="fas fa-info-circle"></i> Qu'est-ce que MySQL ?</h3>
+                <p>MySQL est un système de gestion de bases de données relationnelles (SGBDR) open-source. Il permet de stocker, organiser et récupérer des données de manière efficace et sécurisée.</p>
+                
+                <div class="important">
+                    <p>MySQL est le SGBDR le plus populaire au monde, utilisé par des géants comme Facebook, Twitter, YouTube et Airbnb. Il fait partie de la stack LAMP (Linux, Apache, MySQL, PHP/Python/Perl).</p>
+                </div>
+                
+                <h3><i class="fas fa-download"></i> Installation et configuration</h3>
+                <div class="terminal">
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span> sudo apt update
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span> sudo apt install mysql-server
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span> sudo mysql_secure_installation
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span> sudo mysql -u root -p
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">mysql></span> CREATE USER 'nouvel_user'@'localhost' IDENTIFIED BY 'motdepasse';
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">mysql></span> GRANT ALL PRIVILEGES ON *.* TO 'nouvel_user'@'localhost';
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3><i class="fas fa-table"></i> Création de bases de données et tables</h3>
+                <div class="code-example">
+                    <span class="sql-keyword">CREATE DATABASE</span> ecole;<br>
+                    <span class="sql-keyword">USE</span> ecole;<br><br>
+                    
+                    <span class="sql-keyword">CREATE TABLE</span> etudiants (<br>
+                    &nbsp;&nbsp;id <span class="sql-keyword">INT PRIMARY KEY AUTO_INCREMENT</span>,<br>
+                    &nbsp;&nbsp;nom <span class="sql-keyword">VARCHAR</span>(50) <span class="sql-keyword">NOT NULL</span>,<br>
+                    &nbsp;&nbsp;prenom <span class="sql-keyword">VARCHAR</span>(50) <span class="sql-keyword">NOT NULL</span>,<br>
+                    &nbsp;&nbsp;email <span class="sql-keyword">VARCHAR</span>(100) <span class="sql-keyword">UNIQUE</span>,<br>
+                    &nbsp;&nbsp;date_naissance <span class="sql-keyword">DATE</span>,<br>
+                    &nbsp;&nbsp;moyenne <span class="sql-keyword">DECIMAL</span>(4,2) <span class="sql-keyword">DEFAULT</span> 0.00<br>
+                    );
+                </div>
+                
+                <div class="schema-box">
+                    <div class="schema">
+                        <h4>Structure de la table "etudiants"</h4>
+                        <table>
+                            <tr>
+                                <th>Champ</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>id</td>
+                                <td>INT</td>
+                                <td>Identifiant unique</td>
+                            </tr>
+                            <tr>
+                                <td>nom</td>
+                                <td>VARCHAR(50)</td>
+                                <td>Nom de l'étudiant</td>
+                            </tr>
+                            <tr>
+                                <td>prenom</td>
+                                <td>VARCHAR(50)</td>
+                                <td>Prénom de l'étudiant</td>
+                            </tr>
+                            <tr>
+                                <td>email</td>
+                                <td>VARCHAR(100)</td>
+                                <td>Email unique</td>
+                            </tr>
+                            <tr>
+                                <td>date_naissance</td>
+                                <td>DATE</td>
+                                <td>Date de naissance</td>
+                            </tr>
+                            <tr>
+                                <td>moyenne</td>
+                                <td>DECIMAL(4,2)</td>
+                                <td>Moyenne générale</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <h2><i class="fas fa-code"></i> Requêtes SQL fondamentales</h2>
+            
+            <div class="section">
+                <h3><i class="fas fa-plus-circle"></i> INSERT - Ajouter des données</h3>
+                <div class="code-example">
+                    <span class="sql-keyword">INSERT INTO</span> etudiants (nom, prenom, email, date_naissance, moyenne)<br>
+                    <span class="sql-keyword">VALUES</span> <br>
+                    &nbsp;&nbsp;('Martin', 'Lucie', 'lucie.martin@example.com', '2000-05-15', 15.5),<br>
+                    &nbsp;&nbsp;('Dubois', 'Thomas', 'thomas.dubois@example.com', '2001-02-22', 14.2),<br>
+                    &nbsp;&nbsp;('Lefevre', 'Emma', 'emma.lefevre@example.com', '1999-11-30', 16.8);
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3><i class="fas fa-search"></i> SELECT - Récupérer des données</h3>
+                <div class="code-example">
+                    <span class="sql-comment">-- Sélectionner toutes les colonnes</span><br>
+                    <span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> etudiants;<br><br>
+                    
+                    <span class="sql-comment">-- Sélectionner des colonnes spécifiques</span><br>
+                    <span class="sql-keyword">SELECT</span> nom, prenom, moyenne <span class="sql-keyword">FROM</span> etudiants;<br><br>
+                    
+                    <span class="sql-comment">-- Avec condition WHERE</span><br>
+                    <span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> etudiants <span class="sql-keyword">WHERE</span> moyenne > 15.0;<br><br>
+                    
+                    <span class="sql-comment">-- Trier avec ORDER BY</span><br>
+                    <span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> etudiants <span class="sql-keyword">ORDER BY</span> moyenne <span class="sql-keyword">DESC</span>;
+                </div>
+                
+                <div class="example-box">
+                    <button class="demo-btn" onclick="runQuery('SELECT')"><i class="fas fa-play"></i> Exécuter la requête SELECT</button>
+                    <div class="example-result" id="selectResult">
+                        Résultat de la requête s'affichera ici...
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3><i class="fas fa-sync-alt"></i> UPDATE - Modifier des données</h3>
+                <div class="code-example">
+                    <span class="sql-keyword">UPDATE</span> etudiants<br>
+                    <span class="sql-keyword">SET</span> moyenne = 16.0<br>
+                    <span class="sql-keyword">WHERE</span> nom = 'Martin' <span class="sql-keyword">AND</span> prenom = 'Lucie';
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3><i class="fas fa-trash-alt"></i> DELETE - Supprimer des données</h3>
+                <div class="code-example">
+                    <span class="sql-keyword">DELETE FROM</span> etudiants<br>
+                    <span class="sql-keyword">WHERE</span> moyenne < 10.0;
+                </div>
+            </div>
+            
+            <h2><i class="fas fa-project-diagram"></i> Relations et Jointures</h2>
+            
+            <div class="section">
+                <h3><i class="fas fa-link"></i> Clés primaires et étrangères</h3>
+                <div class="code-example">
+                    <span class="sql-keyword">CREATE TABLE</span> cours (<br>
+                    &nbsp;&nbsp;id <span class="sql-keyword">INT PRIMARY KEY AUTO_INCREMENT</span>,<br>
+                    &nbsp;&nbsp;titre <span class="sql-keyword">VARCHAR</span>(100) <span class="sql-keyword">NOT NULL</span>,<br>
+                    &nbsp;&nbsp;professeur <span class="sql-keyword">VARCHAR</span>(50)<br>
+                    );<br><br>
+                    
+                    <span class="sql-keyword">CREATE TABLE</span> inscriptions (<br>
+                    &nbsp;&nbsp;etudiant_id <span class="sql-keyword">INT</span>,<br>
+                    &nbsp;&nbsp;cours_id <span class="sql-keyword">INT</span>,<br>
+                    &nbsp;&nbsp;date_inscription <span class="sql-keyword">DATE DEFAULT</span> <span class="sql-function">CURDATE</span>(),<br>
+                    &nbsp;&nbsp;<span class="sql-keyword">PRIMARY KEY</span> (etudiant_id, cours_id),<br>
+                    &nbsp;&nbsp;<span class="sql-keyword">FOREIGN KEY</span> (etudiant_id) <span class="sql-keyword">REFERENCES</span> etudiants(id),<br>
+                    &nbsp;&nbsp;<span class="sql-keyword">FOREIGN KEY</span> (cours_id) <span class="sql-keyword">REFERENCES</span> cours(id)<br>
+                    );
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3><i class="fas fa-network-wired"></i> Jointures entre tables</h3>
+                <div class="code-example">
+                    <span class="sql-comment">-- INNER JOIN</span><br>
+                    <span class="sql-keyword">SELECT</span> e.nom, e.prenom, c.titre<br>
+                    <span class="sql-keyword">FROM</span> etudiants e<br>
+                    <span class="sql-keyword">INNER JOIN</span> inscriptions i <span class="sql-keyword">ON</span> e.id = i.etudiant_id<br>
+                    <span class="sql-keyword">INNER JOIN</span> cours c <span class="sql-keyword">ON</span> i.cours_id = c.id;<br><br>
+                    
+                    <span class="sql-comment">-- LEFT JOIN</span><br>
+                    <span class="sql-keyword">SELECT</span> e.nom, e.prenom, c.titre<br>
+                    <span class="sql-keyword">FROM</span> etudiants e<br>
+                    <span class="sql-keyword">LEFT JOIN</span> inscriptions i <span class="sql-keyword">ON</span> e.id = i.etudiant_id<br>
+                    <span class="sql-keyword">LEFT JOIN</span> cours c <span class="sql-keyword">ON</span> i.cours_id = c.id;
+                </div>
+            </div>
+            
+            <h2><i class="fas fa-chart-line"></i> Requêtes avancées</h2>
+            
+            <div class="section">
+                <h3><i class="fas fa-calculator"></i> Fonctions d'agrégation</h3>
+                <div class="code-example">
+                    <span class="sql-comment">-- Calculer la moyenne générale</span><br>
+                    <span class="sql-keyword">SELECT</span> <span class="sql-function">AVG</span>(moyenne) <span class="sql-keyword">AS</span> moyenne_generale <span class="sql-keyword">FROM</span> etudiants;<br><br>
+                    
+                    <span class="sql-comment">-- Trouver la note maximale</span><br>
+                    <span class="sql-keyword">SELECT</span> <span class="sql-function">MAX</span>(moyenne) <span class="sql-keyword">AS</span> meilleure_note <span class="sql-keyword">FROM</span> etudiants;<br><br>
+                    
+                    <span class="sql-comment">-- Compter le nombre d'étudiants</span><br>
+                    <span class="sql-keyword">SELECT</span> <span class="sql-function">COUNT</span>(*) <span class="sql-keyword">AS</span> nombre_etudiants <span class="sql-keyword">FROM</span> etudiants;<br><br>
+                    
+                    <span class="sql-comment">-- Regrouper par note</span><br>
+                    <span class="sql-keyword">SELECT</span> <span class="sql-function">ROUND</span>(moyenne) <span class="sql-keyword">AS</span> note_arrondie, <span class="sql-function">COUNT</span>(*)<br>
+                    <span class="sql-keyword">FROM</span> etudiants<br>
+                    <span class="sql-keyword">GROUP BY</span> note_arrondie<br>
+                    <span class="sql-keyword">ORDER BY</span> note_arrondie <span class="sql-keyword">DESC</span>;
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3><i class="fas fa-code-branch"></i> Sous-requêtes</h3>
+                <div class="code-example">
+                    <span class="sql-comment">-- Étudiants avec une note supérieure à la moyenne</span><br>
+                    <span class="sql-keyword">SELECT</span> nom, prenom, moyenne<br>
+                    <span class="sql-keyword">FROM</span> etudiants<br>
+                    <span class="sql-keyword">WHERE</span> moyenne > (<br>
+                    &nbsp;&nbsp;<span class="sql-keyword">SELECT</span> <span class="sql-function">AVG</span>(moyenne) <span class="sql-keyword">FROM</span> etudiants<br>
+                    );<br><br>
+                    
+                    <span class="sql-comment">-- Cours avec plus de 10 inscriptions</span><br>
+                    <span class="sql-keyword">SELECT</span> titre, professeur<br>
+                    <span class="sql-keyword">FROM</span> cours<br>
+                    <span class="sql-keyword">WHERE</span> id <span class="sql-keyword">IN</span> (<br>
+                    &nbsp;&nbsp;<span class="sql-keyword">SELECT</span> cours_id<br>
+                    &nbsp;&nbsp;<span class="sql-keyword">FROM</span> inscriptions<br>
+                    &nbsp;&nbsp;<span class="sql-keyword">GROUP BY</span> cours_id<br>
+                    &nbsp;&nbsp;<span class="sql-keyword">HAVING</span> <span class="sql-function">COUNT</span>(*) > 10<br>
+                    );
+                </div>
+            </div>
+            
+            <h2><i class="fas fa-wrench"></i> Administration MySQL</h2>
+            
+            <div class="section">
+                <h3><i class="fas fa-user-shield"></i> Gestion des utilisateurs</h3>
+                <div class="code-example">
+                    <span class="sql-comment">-- Créer un nouvel utilisateur</span><br>
+                    <span class="sql-keyword">CREATE USER</span> 'assistant'@'localhost' <span class="sql-keyword">IDENTIFIED BY</span> 'mdp_secret';<br><br>
+                    
+                    <span class="sql-comment">-- Accorder des privilèges</span><br>
+                    <span class="sql-keyword">GRANT SELECT, INSERT, UPDATE</span> <span class="sql-keyword">ON</span> ecole.* <span class="sql-keyword">TO</span> 'assistant'@'localhost';<br><br>
+                    
+                    <span class="sql-comment">-- Révoquer des privilèges</span><br>
+                    <span class="sql-keyword">REVOKE DELETE</span> <span class="sql-keyword">ON</span> ecole.* <span class="sql-keyword">FROM</span> 'assistant'@'localhost';<br><br>
+                    
+                    <span class="sql-comment">-- Voir les privilèges</span><br>
+                    <span class="sql-keyword">SHOW GRANTS FOR</span> 'assistant'@'localhost';
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3><i class="fas fa-tasks"></i> Sauvegarde et restauration</h3>
+                <div class="terminal">
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span> mysqldump -u root -p ecole > backup_ecole.sql
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span> mysql -u root -p ecole < backup_ecole.sql
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span> mysqldump -u root -p --all-databases > full_backup.sql
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simuler l'exécution de requêtes SQL
+        function runQuery(type) {
+            const resultContainer = document.getElementById('selectResult');
+            let resultHTML = '';
+            
+            if (type === 'SELECT') {
+                resultHTML = `
+                    <table>
+                        <tr>
+                            <th>id</th>
+                            <th>nom</th>
+                            <th>prenom</th>
+                            <th>email</th>
+                            <th>date_naissance</th>
+                            <th>moyenne</th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Martin</td>
+                            <td>Lucie</td>
+                            <td>lucie.martin@example.com</td>
+                            <td>2000-05-15</td>
+                            <td>16.00</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Dubois</td>
+                            <td>Thomas</td>
+                            <td>thomas.dubois@example.com</td>
+                            <td>2001-02-22</td>
+                            <td>14.20</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Lefevre</td>
+                            <td>Emma</td>
+                            <td>emma.lefevre@example.com</td>
+                            <td>1999-11-30</td>
+                            <td>16.80</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Moreau</td>
+                            <td>Lucas</td>
+                            <td>lucas.moreau@example.com</td>
+                            <td>2000-08-17</td>
+                            <td>13.50</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" style="text-align: right; font-weight: bold;">Moyenne générale:</td>
+                            <td>15.13</td>
+                        </tr>
+                    </table>
+                    <div style="margin-top: 15px; color: #50FA7B;">
+                        <i class="fas fa-check-circle"></i> Requête exécutée avec succès. 4 lignes retournées (0.02 sec)
+                    </div>
+                `;
+            }
+            
+            resultContainer.innerHTML = resultHTML;
+        }
+        
+        // Animation pour les sections au défilement
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            sections.forEach(section => {
+                section.style.opacity = 0;
+                section.style.transform = 'translateY(30px)';
+                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>

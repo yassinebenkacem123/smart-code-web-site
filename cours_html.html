@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours Complet de HTML</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #000;
+            color: #f0f8ff;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #87CEEB;
+        }
+        
+        h1 {
+            color: #87CEEB;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(135, 206, 235, 0.3);
+        }
+        
+        .subtitle {
+            color: #B0E0E6;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .course-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .info-item {
+            background-color: #1a1a1a;
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: #87CEEB;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .course-content {
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 20px rgba(135, 206, 235, 0.1);
+        }
+        
+        h2 {
+            color: #87CEEB;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #2a2a2a;
+            font-size: 1.8rem;
+        }
+        
+        h3 {
+            color: #87CEEB;
+            margin: 25px 0 15px;
+            font-size: 1.4rem;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            color: #e0e0e0;
+        }
+        
+        .section {
+            margin-bottom: 35px;
+            padding: 20px;
+            background-color: #222;
+            border-radius: 8px;
+            border-left: 4px solid #87CEEB;
+        }
+        
+        .code-example {
+            background-color: #2a2a2a;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            color: #87CEEB;
+            overflow-x: auto;
+            border: 1px solid #3a3a3a;
+            line-height: 1.8;
+        }
+        
+        .code-comment {
+            color: #5f9ea0;
+        }
+        
+        ul, ol {
+            padding-left: 25px;
+            margin: 15px 0;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            color: #e0e0e0;
+        }
+        
+        .important {
+            background-color: rgba(30, 144, 255, 0.1);
+            border-left: 4px solid #1E90FF;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .start-btn {
+            display: block;
+            width: 250px;
+            margin: 40px auto;
+            padding: 15px;
+            background: linear-gradient(to right, #1E90FF, #00BFFF);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 0 15px rgba(30, 144, 255, 0.5);
+        }
+        
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(30, 144, 255, 0.7);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #87CEEB;
+            border-top: 1px solid #2a2a2a;
+            margin-top: 30px;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .course-content {
+                padding: 20px;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+            
+            .code-example {
+                padding: 15px;
+                font-size: 0.9rem;
+            }
+            
+            .start-btn {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Cours Complet de HTML</h1>
+            <p class="subtitle">Apprenez les fondamentaux du langage de structuration web</p>
+        </header>
+        
+        <div class="course-content">
+            <h2>Introduction au HTML</h2>
+            
+            <div class="section">
+                <h3>Qu'est-ce que le HTML ?</h3>
+                <p>HTML (HyperText Markup Language) est le langage standard utilisé pour créer des pages web. Il permet de structurer le contenu d'une page en utilisant des balises.</p>
+                
+                <div class="important">
+                    <p>Le HTML n'est pas un langage de programmation, mais un langage de balisage qui définit la structure de votre contenu.</p>
+                </div>
+                
+                <h3>Structure de base d'une page HTML</h3>
+                <div class="code-example">
+                    <span class="code-comment">&lt;!-- Déclaration du type de document --&gt;</span><br>
+                    &lt;!DOCTYPE html&gt;<br>
+                    <span class="code-comment">&lt;!-- Élément racine --&gt;</span><br>
+                    &lt;html lang="fr"&gt;<br>
+                    &lt;head&gt;<br>
+                    &nbsp;&nbsp;&lt;meta charset="UTF-8"&gt;<br>
+                    &nbsp;&nbsp;&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;<br>
+                    &nbsp;&nbsp;&lt;title&gt;Titre de la page&lt;/title&gt;<br>
+                    &lt;/head&gt;<br>
+                    &lt;body&gt;<br>
+                    <span class="code-comment">&lt;!-- Contenu visible de la page --&gt;</span><br>
+                    &nbsp;&nbsp;&lt;h1&gt;Mon Premier Titre&lt;/h1&gt;<br>
+                    &nbsp;&nbsp;&lt;p&gt;Mon premier paragraphe.&lt;/p&gt;<br>
+                    &lt;/body&gt;<br>
+                    &lt;/html&gt;
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Les éléments et les balises</h3>
+                <p>Les éléments HTML sont les blocs de construction d'une page web. Ils sont définis par des balises :</p>
+                
+                <ul>
+                    <li><strong>Balise ouvrante :</strong> &lt;nom-balise&gt;</li>
+                    <li><strong>Contenu :</strong> Le contenu de l'élément</li>
+                    <li><strong>Balise fermante :</strong> &lt;/nom-balise&gt;</li>
+                </ul>
+                
+                <div class="code-example">
+                    &lt;tagname&gt;Contenu...&lt;/tagname&gt;
+                </div>
+                
+                <div class="important">
+                    <p>Certains éléments n'ont pas de contenu et ne nécessitent pas de balise fermante. On les appelle éléments vides : &lt;br&gt;, &lt;img&gt;, &lt;input&gt;, etc.</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Les attributs</h3>
+                <p>Les attributs fournissent des informations supplémentaires sur les éléments :</p>
+                
+                <div class="code-example">
+                    &lt;a href="https://exemple.com" target="_blank"&gt;Visitez notre site&lt;/a&gt;
+                </div>
+                
+                <p>Dans cet exemple, <code>href</code> et <code>target</code> sont des attributs de la balise &lt;a&gt;.</p>
+            </div>
+            
+            <h2>Éléments HTML essentiels</h2>
+            
+            <div class="section">
+                <h3>Titres</h3>
+                <p>Les titres sont définis avec les balises &lt;h1&gt; à &lt;h6&gt; :</p>
+                
+                <div class="code-example">
+                    &lt;h1&gt;Titre Principal&lt;/h1&gt;<br>
+                    &lt;h2&gt;Sous-titre&lt;/h2&gt;<br>
+                    &lt;h3&gt;Sous-sous-titre&lt;/h3&gt;
+                </div>
+                
+                <div class="important">
+                    <p>Utilisez un seul &lt;h1&gt; par page pour le titre principal.</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Paragraphes et sauts de ligne</h3>
+                <div class="code-example">
+                    &lt;p&gt;Ceci est un paragraphe.&lt;/p&gt;<br>
+                    &lt;p&gt;Ceci est un autre paragraphe.&lt;/p&gt;<br>
+                    &lt;p&gt;Ceci est une ligne&lt;br&gt;avec un saut de ligne.&lt;/p&gt;
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Listes</h3>
+                <p>Il existe deux types de listes :</p>
+                
+                <div class="code-example">
+                    <span class="code-comment">&lt;!-- Liste non ordonnée --&gt;</span><br>
+                    &lt;ul&gt;<br>
+                    &nbsp;&nbsp;&lt;li&gt;Élément 1&lt;/li&gt;<br>
+                    &nbsp;&nbsp;&lt;li&gt;Élément 2&lt;/li&gt;<br>
+                    &lt;/ul&gt;<br><br>
+                    
+                    <span class="code-comment">&lt;!-- Liste ordonnée --&gt;</span><br>
+                    &lt;ol&gt;<br>
+                    &nbsp;&nbsp;&lt;li&gt;Premier élément&lt;/li&gt;<br>
+                    &nbsp;&nbsp;&lt;li&gt;Deuxième élément&lt;/li&gt;<br>
+                    &lt;/ol&gt;
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Liens</h3>
+                <p>Les liens sont créés avec la balise &lt;a&gt; :</p>
+                
+                <div class="code-example">
+                    <span class="code-comment">&lt;!-- Lien vers une page externe --&gt;</span><br>
+                    &lt;a href="https://www.exemple.com"&gt;Visitez Exemple.com&lt;/a&gt;<br><br>
+                    
+                    <span class="code-comment">&lt;!-- Lien vers une ancre dans la même page --&gt;</span><br>
+                    &lt;a href="#section2"&gt;Aller à la section 2&lt;/a&gt;<br><br>
+                    
+                    <span class="code-comment">&lt;!-- Lien pour envoyer un email --&gt;</span><br>
+                    &lt;a href="mailto:contact@exemple.com"&gt;Contactez-nous&lt;/a&gt;
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Images</h3>
+                <p>Pour insérer une image :</p>
+                
+                <div class="code-example">
+                    &lt;img src="chemin/vers/image.jpg" alt="Description de l'image" width="500" height="300"&gt;
+                </div>
+                
+                <div class="important">
+                    <p>L'attribut <code>alt</code> est obligatoire pour l'accessibilité et le référencement.</p>
+                </div>
+            </div>
+            
+            <h2>Formulaires HTML</h2>
+            
+            <div class="section">
+                <h3>Structure de base d'un formulaire</h3>
+                <div class="code-example">
+                    &lt;form action="/traitement.php" method="post"&gt;<br>
+                    &nbsp;&nbsp;&lt;label for="nom"&gt;Nom :&lt;/label&gt;<br>
+                    &nbsp;&nbsp;&lt;input type="text" id="nom" name="nom"&gt;&lt;br&gt;<br>
+                    &nbsp;&nbsp;&lt;label for="email"&gt;Email :&lt;/label&gt;<br>
+                    &nbsp;&nbsp;&lt;input type="email" id="email" name="email"&gt;&lt;br&gt;<br>
+                    &nbsp;&nbsp;&lt;input type="submit" value="Envoyer"&gt;<br>
+                    &lt;/form&gt;
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Éléments de formulaire courants</h3>
+                <ul>
+                    <li><strong>&lt;input&gt;</strong> : Champ de saisie (text, password, email, etc.)</li>
+                    <li><strong>&lt;textarea&gt;</strong> : Zone de texte multiligne</li>
+                    <li><strong>&lt;select&gt;</strong> : Liste déroulante</li>
+                    <li><strong>&lt;button&gt;</strong> : Bouton</li>
+                    <li><strong>&lt;label&gt;</strong> : Étiquette pour un champ</li>
+                    <li><strong>&lt;fieldset&gt;</strong> : Groupe de champs</li>
+                    <li><strong>&lt;legend&gt;</strong> : Titre pour un groupe de champs</li>
+                </ul>
+            </div>
+            
+            <h2>HTML5 Sémantique</h2>
+            
+            <div class="section">
+                <p>Les éléments sémantiques améliorent la structure et l'accessibilité :</p>
+                
+                <div class="code-example">
+                    &lt;header&gt;En-tête de page&lt;/header&gt;<br>
+                    &lt;nav&gt;Navigation&lt;/nav&gt;<br>
+                    &lt;main&gt;<br>
+                    &nbsp;&nbsp;&lt;article&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;section&gt;Section 1&lt;/section&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;section&gt;Section 2&lt;/section&gt;<br>
+                    &nbsp;&nbsp;&lt;/article&gt;<br>
+                    &nbsp;&nbsp;&lt;aside&gt;Contenu complémentaire&lt;/aside&gt;<br>
+                    &lt;/main&gt;<br>
+                    &lt;footer&gt;Pied de page&lt;/footer&gt;
+                </div>
+                
+                <div class="important">
+                    <p>L'utilisation d'éléments sémantiques améliore le référencement et l'accessibilité de votre site.</p>
+                </div>
+            </div>
+            
+        </div>
+  
+    </div>
+</body>
+</html>

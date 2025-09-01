@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Chela+One&family=Cherry+Swash:wght@400;700&family=Kavoon&family=Orienta&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cherry+Swash:wght@400;700&family=Kavoon&display=swap');
+@import "tailwindcss";
+@theme{
+  --background-image-hero:url('assets/background.jpg')
+}
+
+*{
+  scrollbar-width: thin;
+  scrollbar-color: #4fd0ffdd #65a8d2c0;
+}
+
+.font-kavoon {
+  font-family: 'Kavoon', cursive;
+}
+
+.font-cherry-swash {
+  font-family: 'Cherry Swash', cursive;
+}
+
+.font-chela-one {
+  font-family: 'Chela One', cursive;
+}
+
+.font-orienta {
+  font-family: 'Orienta', sans-serif;
+}
+
+@theme{
+  --color-primary: #3CC5FF !important;
+}
+
+.ql-editor{
+  height: 20rem !important;
+}
+
+.clip-wave {
+  clip-path: ellipse(150% 100% at 50% 0%);
+}
