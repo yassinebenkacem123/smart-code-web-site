@@ -5,7 +5,6 @@ const pool = require('../config/db');
 // ✅ L'étudiant soumet plusieurs réponses pour un chapitre
 exports.soumettreReponsesChapitre = async (req, res) => {
   const {reponses} = req.body;
-  console.log(reponses)
   const etudiant_id = req.user.id;
   const { chapitre_id } = req.params;
   try {

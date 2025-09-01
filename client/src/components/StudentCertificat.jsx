@@ -73,7 +73,7 @@ const StudentCertificat = ({ certificatData }) => {
             
             <div className="text-center mb-6 md:mb-0">
               <div className="w-32 h-20 mx-auto mb-2 bg-gradient-to-b from-white to-sky-100 border-2 border-dashed border-sky-300 rounded-lg flex items-center justify-center">
-                <span className="text-gray-400 text-sm">Signature</span>
+                <img src="../../src/assets/signature.svg" alt="signature" />
               </div>
             </div>
             
