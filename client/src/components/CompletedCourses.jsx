@@ -76,7 +76,7 @@ const CompletedCourses = ({completedCourses,setSlidToCompletedCourses}) => {
                 <div className="px-4 pb-4">
                   <button 
                   onClick={()=>{
-                    navigate('/etudiant-dashboard/read-course', {state:{courseId: course.cours_id}})
+                    navigate('/etudiant-dashboard/read-course', {state:{courseId: course.cours_id,  courseTitre: course.titre}})
                   }}
                   className="w-full cursor-pointer py-2 bg-gradient-to-r from-sky-600 to-sky-800 text-white font-medium rounded-lg hover:from-sky-700 hover:to-sky-900 transition-all duration-300 flex items-center justify-center group-hover:shadow-lg group-hover:shadow-sky-900/30">
                     Voir le course
