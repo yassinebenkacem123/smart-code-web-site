@@ -1,9 +1,9 @@
 // 📁 controllers/authController.js
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require("uuid");
+const SibApiV3Sdk = require("sib-api-v3-sdk");
 const pool = require('../config/db');
-const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 const TABLES = {
@@ -64,44 +64,73 @@ if (!passwordRegex.test(mot_de_passe)) {
   }
 };
 
-// Mot de passe oublié
 exports.forgotPassword = async (req, res) => {
-  const { email, role } = req.body;
-  const table = TABLES[role];
-  if (!table) return res.status(400).json({ message: 'Rôle invalide' });
+  const { email, role } = req.body || {};
+  console.log(`[forgotPassword] Request -> email:"${email}" role:"${role}"`);
+
+  // Vérification basique email
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!email || !emailRegex.test(email)) {
+    return res.status(400).json({ success: false, message: "Format email invalide" });
+  }
 
   try {
-    const [rows] = await pool.execute(`SELECT * FROM ${table} WHERE email = ?`, [email]);
+    // 1. Vérifier si l'utilisateur existe
+    const [rows] = await pool.execute(
+      `SELECT id, email FROM ${TABLES[role]} WHERE email = ? LIMIT 1`,
+      [email]
+    );
     const user = rows[0];
-    if (!user) return res.status(404).json({ message: 'Utilisateur non trouvé' });
+    if (!user) {
+      return res.status(404).json({ success: false, message: "Utilisateur non trouvé" });
+    }
 
+    // 2. Créer un token unique
+    await pool.execute(`DELETE FROM password_reset_tokens WHERE user_id = ?`, [user.id]);
     const token = uuidv4();
-    const expires = new Date(Date.now() + 3600 * 1000); // 1h
-    await pool.execute(`INSERT INTO password_reset_tokens (user_id, token, expires_at) VALUES (?, ?, ?)`, [user.id, token, expires]);
+    const expires = new Date(Date.now() + 3600 * 1000);
+    await pool.execute(
+      `INSERT INTO password_reset_tokens (user_id, token, expires_at) VALUES (?,?,?)`,
+      [user.id, token, expires]
+    );
 
     const resetLink = `${process.env.FRONT_URL}/reset-password?token=${token}&role=${role}`;
 
-    // Envoi email
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD
-      }
+    // 3. Configurer Brevo client
+    const client = SibApiV3Sdk.ApiClient.instance;
+    client.authentications["api-key"].apiKey = process.env.BREVO_API_KEY;
+
+    const emailApi = new SibApiV3Sdk.TransactionalEmailsApi();
+
+    // 4. Envoyer l’email
+    const response = await emailApi.sendTransacEmail({
+      sender: {
+        name: "SmartCode",
+        email: process.env.EMAIL_FROM, // <--- Ton email validé dans Brevo
+      },
+      to: [{ email: user.email }],
+      subject: "Réinitialisation de mot de passe",
+      htmlContent: `
+        <div style="font-family:Arial,sans-serif;padding:16px;background:#f4f4f4;line-height:1.5;">
+          <h2 style="color:#0284c7;">Réinitialisation de mot de passe</h2>
+          <p>Vous avez demandé à réinitialiser votre mot de passe. Ce lien est valable 1 heure.</p>
+          <p style="text-align:center;margin:28px 0;">
+            <a href="${resetLink}" style="background:#0284c7;color:#fff;padding:12px 22px;border-radius:6px;text-decoration:none;">Réinitialiser le mot de passe</a>
+          </p>
+          <p style="font-size:12px;color:#666;">Si vous n'êtes pas à l'origine de cette demande, ignorez cet email.</p>
+        </div>
+      `,
+      textContent: `Bonjour,\nCliquez sur ce lien pour réinitialiser votre mot de passe (valide 1h): ${resetLink}`,
     });
 
-    await transporter.sendMail({
-      to: email,
-      subject: 'Réinitialisation de mot de passe',
-      html: `<p>Cliquez ici pour réinitialiser votre mot de passe : <a href="${resetLink}">${resetLink}</a></p>`
-    });
+    console.log("[forgotPassword] Email sent ✅", response);
+    return res.json({ success: true, message: "Email envoyé", expiresAt: expires });
 
-    res.json({ message: 'E-mail envoyé' });
   } catch (err) {
-    res.status(500).json({ message: 'Erreur', error: err.message });
+    console.error("[forgotPassword] Error:", err.message);
+    return res.status(500).json({ success: false, message: "Erreur interne", error: err.message });
   }
 };
-
 // Réinitialisation mot de passe
 exports.resetPassword = async (req, res) => {
   const { token, nouveau_mdp, role } = req.body;
@@ -151,12 +180,12 @@ exports.checkAuth = async (req, res) => {
   if (!table) return res.status(400).json({ message: 'Rôle invalide' });
 
   try {
-    const [rows] = await pool.execute(`SELECT * FROM ${table} WHERE id = ?, [id]`);
+  const [rows] = await pool.execute(`SELECT * FROM ${table} WHERE id = ?`, [id]);
     const user = rows[0];
     if (!user) return res.status(404).json({ message: 'Utilisateur introuvable' });
 
     res.json({ user: { ...user, role } });
   } catch (err) {
-    res.status(500).json({ message: 'Erreur serveur', error: err.message });
-  }
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+  }
 };

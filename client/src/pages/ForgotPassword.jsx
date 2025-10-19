@@ -27,7 +27,7 @@ const ForgotPassword = () => {
       });
       setEmailSent(true);
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Une erreur est survenue', {
+      toast.error(err.message || 'Une erreur est survenue', {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
